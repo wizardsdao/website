@@ -1,40 +1,57 @@
 import { ethers } from "ethers";
 import BigNumber from "bignumber.js";
-import { useState } from "react";
+import { useEns } from "../hooks/useEns";
+import { TailSpin } from "./loader";
+import { useEffect } from "react";
 
-const bidRow = ({ e, account }) => {
+const bidRow = ({ e, account, loading }) => {
+  const state = useEns(e.sender);
+
   const shortAddress = [e.sender.substr(0, 4), e.sender.substr(38, 4)].join(
     "..."
   );
 
-  const ensName = shortAddress;
-  // const [ensName, setEnsName] = useState(shortAddress);
-  // TODO :- prevent excessive calls before making ens lookup
-  // useEffect(() => {
-  //   const fn = async () => {
-  //     const name = await ethers.getDefaultProvider().lookupAddress(e.sender);
-  //     if (name) {
-  //       setEnsName(name);
-  //     }
-  //   };
-
-  //   fn();
-  // });
+  useEffect(() => {}, [e.sender]);
 
   return (
     <>
       <li className="br">
         <div className="bi">
-          {ensName}
+          {loading ? null : state.data || shortAddress}
           {(() => {
-            if (e.sender == account) {
+            if (!loading && e.sender == account) {
               return <div className="pill">Your bid</div>;
+            }
+          })()}
+          {(() => {
+            if (loading) {
+              return;
+            }
+
+            if (state.loading) {
+              return (
+                <TailSpin
+                  height={15}
+                  width={15}
+                  style={{ position: "relative", top: "-0.5px", left: "15px" }}
+                />
+              );
             }
           })()}
         </div>
         <div className="bi-cost">
-          <span style={{ fontFamily: "sans-serif" }}>{"Ξ "}</span>
-          {new BigNumber(ethers.utils.formatEther(e.value)).toFixed(2)}
+          {(() => {
+            if (!loading) {
+              return (
+                <>
+                  <span style={{ fontFamily: "sans-serif" }}>{"Ξ "}</span>
+                  {new BigNumber(ethers.utils.formatEther(e.value)).toFixed(2)}
+                </>
+              );
+            }
+
+            return null;
+          })()}
         </div>
       </li>
       <style jsx>{`
