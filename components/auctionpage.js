@@ -1,4 +1,5 @@
 import Layout from "./layout/home.js";
+import dayjs from "dayjs";
 import { format } from "date-fns";
 import Link from "next/link";
 import { useEffect, useState, useMemo } from "react";
@@ -524,6 +525,20 @@ const Auction = () => {
                 cn += " oneOfOne";
               }
 
+              const timeLeft = Number(w.endTime) - dayjs().unix();
+              if (timeLeft <= 300 && timeLeft >= 0) {
+                cn += " pulse";
+              }
+
+              // last 25 minutes speed up pulse and update opacity
+              if (timeLeft <= 150 && timeLeft >= 0) {
+                cn += " pulse-urgent";
+              }
+
+              if (timeLeft <= 0) {
+                cn += " done";
+              }
+
               return (
                 <div className={cn} key={idx}>
                   {(() => {
@@ -645,38 +660,30 @@ const Auction = () => {
                   <div className="bid-history">
                     <div className="bid-history-inner">
                       <ul className="bids">
-                        {wizard.bids?.length ? <span>Latest bids</span> : null}
                         {(() => {
-                          return wizard.bids
-                            ?.map((e, idx) => {
-                              return (
+                          let ret = [];
+                          for (
+                            let i = wizard.bids.length - 1;
+                            i > wizard.bids.length - 4;
+                            i--
+                          ) {
+                            if (wizard.bids[i]) {
+                              ret.push(
                                 <BidRow
-                                  key={idx}
-                                  e={e}
+                                  key={wizard.bids[i].value.toString()}
+                                  e={wizard.bids[i]}
                                   account={web3React.account}
+                                  wizardId={wizard.wizardId}
                                 />
                               );
-                            })
-                            .reverse()
-                            .slice(0, 3);
-                          // convert to for loop when we fix ens rendering
-                          // var ret = [];
-                          // for (
-                          //   let i = wizard.bids.length - 1;
-                          //   i > wizard.bids.length - 4;
-                          //   i--
-                          // ) {
-                          //   if (wizard.bids[i]) {
-                          //     ret.push(
-                          //       <BidRow
-                          //         key={i}
-                          //         e={wizard.bids[i]}
-                          //         account={web3React.account}
-                          //       />
-                          //     );
-                          //   }
-                          // }
-                          // return ret;
+                            }
+                          }
+
+                          if (!ret.length) {
+                            return null;
+                          }
+
+                          return [<span key="bleh">Latest bids</span>, ...ret];
                         })()}
                       </ul>
                     </div>
@@ -857,6 +864,43 @@ const Auction = () => {
         }
       `}</style>
       <style jsx>{`
+        .done {
+          filter: grayscale(1);
+        }
+        .pulse {
+          border-radius: 6px;
+          animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+          }
+
+          70% {
+            box-shadow: 0 0 0 7px rgba(255, 82, 82, 0);
+          }
+
+          100% {
+            box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+          }
+        }
+        .pulse-urgent {
+          border-radius: 6px;
+          animation: pulse-urgent 300ms infinite;
+        }
+        @keyframes pulse-urgent {
+          0% {
+            box-shadow: 0 0 0 0 rgba(255, 82, 82, 1);
+          }
+
+          70% {
+            box-shadow: 0 0 0 7px rgba(255, 82, 82, 0);
+          }
+
+          100% {
+            box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+          }
+        }
         .g-error {
           width: 100%;
           max-width: 750px;
