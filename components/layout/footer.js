@@ -34,7 +34,9 @@ const Footer = () => {
             <a href="https://twitter.com/wizardsdao">Twitter</a>
           </li>
           <li>
-            <a href="https://snapshot.org/#/wizdao.eth">The DAO</a>
+            <a href="https://etherscan.io/address/0xC23b12EBA3af92dc3Ec94744c0c260caD0EeD0e5">
+              Etherscan
+            </a>
           </li>
         </ul>
       </footer>

@@ -509,6 +509,15 @@ const Auction = () => {
         })()}
         <div className="container p hero">
           <div className="pillh center">
+            <a
+              href="https://twitter.com/WizardsDAOBot/status/1483146932847476738"
+              className="btn btn-sm pilltitle small"
+              target="_blank"
+            >
+              <span>Past Auction Prices</span>
+            </a>
+          </div>
+          <div className="pillh center">
             <span className="md">{format(new Date(), "MM/dd/yy")}</span>
           </div>
           <span className="purp center pilltitle">5 NEW WIZARDS DAILY</span>
@@ -864,6 +873,24 @@ const Auction = () => {
         }
       `}</style>
       <style jsx>{`
+        .btn-sm span {
+          position: relative;
+        }
+        .btn-sm {
+          display: inline-block;
+          background: #000;
+          border-radius: 6px;
+          max-width: 200px;
+          margin: 1rem auto;
+          background: rgb(249, 180, 43) !important;
+          border: 1px solid rgb(224, 149, 0) !important;
+          line-height: 1.6rem;
+          transition: all 200ms ease;
+        }
+        .btn-sm:hover {
+          transform: scale(1.066);
+          box-shadow: 0 0 25px 1px rgba(249, 180, 43, 1);
+        }
         .done {
           filter: grayscale(1);
         }
@@ -1380,6 +1407,9 @@ const Auction = () => {
           color: #fff !important;
           border: 1px solid #000;
           font-weight: 600;
+        }
+        .hero .btn-sm {
+          color: rgb(125, 92, 26) !important;
         }
         .line {
           width: 100%;
