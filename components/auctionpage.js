@@ -752,12 +752,12 @@ const Auction = () => {
                       WizardsDAO will be auctioning 5 wizards on-chain every 24
                       hours until 2000 are minted. 90% of auction proceeds (ETH)
                       are automatically deposited into the WizardsDAO treasury
-                      (gnosis-safe multi-sig), where they are governed by wizard
+                      (Gnosis Safe multi-sig), where they are governed by wizard
                       owners.
                     </p>
 
                     <p>
-                      Whenever an auction is settled the transaction will also
+                      Whenever an auction is settled, the transaction will also
                       cause 5 new wizards to be minted and a new 24 hour auction
                       to begin. While settlement is most heavily incentivized
                       for any winning bidder, it can be triggered by anyone,
@@ -769,9 +769,9 @@ const Auction = () => {
                   <Accordion.Header>WizardsDAO</Accordion.Header>
                   <Accordion.Body>
                     <p>
-                      A gnosis-safe multi-sig treasury will be set up to store
+                      A Gnosis Safe multi-sig treasury has been set up to store
                       WizardsDAO auction proceeds. Governance is done through
-                      snapshot.
+                      Snapshot.
                     </p>
                     <p>
                       A path to full decentralization should be completed by the
@@ -781,7 +781,7 @@ const Auction = () => {
                     <p>
                       Each Wizard is an irrevocable member of WizardsDAO and
                       entitled to one vote in all governance matters. Wizards
-                      votes are non-transferable (if you sell your wizard the
+                      votes are non-transferable (if you sell your wizard, the
                       vote goes with it).
                     </p>
                   </Accordion.Body>
@@ -833,8 +833,8 @@ const Auction = () => {
                     <p>
                       54 Wizards will be reserved to reward significant
                       contributors to the project. 1 wizard is distributed to
-                      the creator's wallet at the beginning of every auction for
-                      54 auctions.
+                      the creators' wallet at the beginning of every auction for
+                      the first 54 auctions.
                     </p>
                   </Accordion.Body>
                 </Accordion.Item>
