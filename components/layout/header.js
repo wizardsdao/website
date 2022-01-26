@@ -47,7 +47,10 @@ const Header = (props) => {
           </div>
         </div>
         <nav className="end">
-          <ul className="small">
+          <ul
+            className="small"
+            style={{ display: "flex", alignItems: "center" }}
+          >
             <li className="hidden-mobile">
               <a
                 className="nav-link"
@@ -103,9 +106,6 @@ const Header = (props) => {
               );
             })()}
           </ul>
-          {/* <Link href="/a/sign-in">
-          <a className="btn nav-link">Sign in</a>
-        </Link> */}
         </nav>
       </header>
       <style jsx>{`

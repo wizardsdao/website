@@ -6,15 +6,15 @@ import { memo } from "react";
 
 const Layout = (props) => {
   return (
-    <>
+    <div id="wrap">
       <style jsx global>
         {base}
       </style>
       <Head {...props} />
       <Header {...props} />
-      <main>{props.children}</main>
+      <main id="main">{props.children}</main>
       <Footer />
-    </>
+    </div>
   );
 };
 
