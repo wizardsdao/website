@@ -731,7 +731,7 @@ const Auction = () => {
             ]}
           />
         </div>
-        <div className="container cp">
+        <div className="container cp" style={{ paddingBottom: "3rem" }}>
           <div style={{ marginBottom: 0 }} className="abt">
             <div className="p">
               <h2>How it works</h2>

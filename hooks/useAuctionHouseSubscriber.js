@@ -3,8 +3,18 @@ import { getContractsForChainOrThrow } from "../sdk/dist/contract";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { ethers } from "@usedapp/core/node_modules/ethers";
 
-// avg blocks per day are about 6_500, give some space for extended auctions;
+// avg blocks per day are about 6_500, give some space for extended auctions
 const BLOCKS_PER_DAY = 8_000;
+const BLOCKS_PER_HOUR = 240;
+
+// record whether we've made our first call to api provider
+let polled = false;
+
+const getBlocks = () => {
+  if (polled) return (BLOCKS_PER_HOUR / 60) * 10; // 10 minutes
+
+  return BLOCKS_PER_DAY;
+};
 
 const wcCfg = {
   rpc: {
@@ -247,11 +257,12 @@ export default function useAuctionHouseSubscriber() {
     });
   };
 
-  const getBids = async () => {
+  const getBids = async (cancelRequest) => {
     try {
+      if (cancelRequest) return;
       const bids = await auctionHouseContract.queryFilter(
         bidFilter,
-        0 - BLOCKS_PER_DAY
+        0 - getBlocks()
       );
 
       for (let i = 0; i < bids.length; i++) {
@@ -270,11 +281,12 @@ export default function useAuctionHouseSubscriber() {
     }
   };
 
-  const getCreatedEvents = async () => {
+  const getCreatedEvents = async (cancelRequest) => {
     try {
+      if (cancelRequest) return;
       const cae = await auctionHouseContract.queryFilter(
         createdFilter,
-        0 - BLOCKS_PER_DAY
+        0 - getBlocks()
       );
 
       const latest = cae.slice(-5);
@@ -295,11 +307,12 @@ export default function useAuctionHouseSubscriber() {
     }
   };
 
-  const getExtendedEvents = async () => {
+  const getExtendedEvents = async (cancelRequest) => {
     try {
+      if (cancelRequest) return;
       const cae = await auctionHouseContract.queryFilter(
         extendedFilter,
-        0 - BLOCKS_PER_DAY
+        0 - getBlocks()
       );
 
       const latest = cae.slice(-5);
@@ -312,11 +325,12 @@ export default function useAuctionHouseSubscriber() {
     }
   };
 
-  const getSettledEvents = async () => {
+  const getSettledEvents = async (cancelRequest) => {
     try {
+      if (cancelRequest) return;
       const cae = await auctionHouseContract.queryFilter(
         settledFilter,
-        0 - BLOCKS_PER_DAY
+        0 - getBlocks()
       );
 
       const latest = cae.slice(-5);
@@ -343,13 +357,15 @@ export default function useAuctionHouseSubscriber() {
     }
   };
 
-  const poll = () => {
+  const poll = (cancelRequest) => {
     setLoading(true);
     const fn = async () => {
       try {
+        if (cancelRequest) return;
         const paused = await auctionHouseContract.paused();
         setPaused(paused);
 
+        if (cancelRequest) return;
         const reachedCap = await auctionHouseContract.reachedCap();
         setReachedCap(reachedCap);
       } catch (ex) {
@@ -358,12 +374,13 @@ export default function useAuctionHouseSubscriber() {
     };
 
     Promise.allSettled([
-      getBids(),
-      getCreatedEvents(),
-      getExtendedEvents(),
-      getSettledEvents(),
-      fn(),
+      getBids(cancelRequest),
+      getCreatedEvents(cancelRequest),
+      getExtendedEvents(cancelRequest),
+      getSettledEvents(cancelRequest),
+      fn(cancelRequest),
     ]).then(() => {
+      polled = true;
       setLoading(false);
     });
   };
@@ -371,15 +388,20 @@ export default function useAuctionHouseSubscriber() {
   let onLoaded = false;
   // run setup fn that binds to events once
   useEffect(() => {
+    let cancelRequest = false;
     if (!onLoaded) {
-      poll();
+      poll(cancelRequest);
       onLoaded = true;
     }
 
     const interval = setInterval(() => {
-      poll();
+      poll(cancelRequest);
     }, timerLength);
-    return () => clearInterval(interval);
+
+    return function cleanup() {
+      cancelRequest = true;
+      clearInterval(interval);
+    };
   }, [timerLength]);
 
   return [
