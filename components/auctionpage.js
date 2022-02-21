@@ -29,6 +29,8 @@ const wcCfg = {
 let injected = new InjectedConnector({ supportedChainIds: [1, 31337, 4] });
 let wcConnector = new WalletConnectConnector(wcCfg);
 
+const AUCTION_COUNT = 3;
+
 let minBidIncPercentage = new BigNumber(5);
 const computeMinimumNextBid = (currentBid, minBidIncPercentage) => {
   if (currentBid.isZero()) {
@@ -82,7 +84,7 @@ const dummyWizard = {
 };
 const getDummyWizards = () => {
   const dummies = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < AUCTION_COUNT; i++) {
     const d = { ...dummyWizard, id: i + 1 };
     dummies.push(d);
   }
@@ -174,7 +176,7 @@ const eventsToWizards = async (
   let oldWizards = wizards;
 
   // refresh them bitches if api provider dropped an event
-  if (wizards.length < 5) {
+  if (wizards.length < AUCTION_COUNT) {
     wizards = [];
   }
 
@@ -236,7 +238,7 @@ const eventsToWizards = async (
   }
 
   let i = 1;
-  for (let event of createdEvents.slice(-5)) {
+  for (let event of createdEvents.slice(-AUCTION_COUNT)) {
     // cache dataURI for when we skip image load
     let oldDataURI;
     for (let j = 0; j < oldWizards.length; j++) {
@@ -329,7 +331,7 @@ const Auction = () => {
   const [imageLoading, setImageLoading] = useState(false);
   const [wizards, setWizards] = useState(getDummyWizards());
   const [previousPageId, setPreviousPageId] = useState(1);
-  const [nextPageId, setNextPageId] = useState(5);
+  const [nextPageId, setNextPageId] = useState(AUCTION_COUNT);
   const [bidError, setBidError] = useState("");
   const [globalError, setGlobalError] = useState("");
   const [restartAuction, setRestartAuction] = useState(false);
@@ -337,7 +339,7 @@ const Auction = () => {
   const [isWhitelist, setIsWhitelist] = useState(false);
 
   useEffect(() => {
-    if (settledEvents.length == 5 && !restartAuction) {
+    if (settledEvents.length == AUCTION_COUNT && !restartAuction) {
       setRestartAuction(true);
     }
   }, [JSON.stringify(settledEvents)]);
@@ -388,7 +390,7 @@ const Auction = () => {
         hasPrevious = true;
       }
 
-      if (widx < 4 && wizards[widx + 1] !== undefined) {
+      if (widx < AUCTION_COUNT - 1 && wizards[widx + 1] !== undefined) {
         hasNext = true;
       }
 
@@ -405,9 +407,9 @@ const Auction = () => {
       if (hasPrevious && wizards[widx - 1] !== undefined) {
         previousId = id - 1;
       } else {
-        previousId = 5;
+        previousId = AUCTION_COUNT;
 
-        if (wizards[4] == undefined) {
+        if (wizards[AUCTION_COUNT - 1] == undefined) {
           previousId = widx + 1;
         }
       }
@@ -492,7 +494,7 @@ const Auction = () => {
   return (
     <Layout
       isWhitelist={isWhitelist}
-      title="WizardsDAO - 5 Wizards every day. 2000 ever."
+      title={`WizardsDAO - ${AUCTION_COUNT} Wizards every day. 2000 ever.`}
       web3Connected={web3React.active}
       walletConnectClick={onWalletConnectClick}
       walletDisconnectClick={onWalletDisconnect}
@@ -520,7 +522,9 @@ const Auction = () => {
           <div className="pillh center">
             <span className="md">{format(new Date(), "MM/dd/yy")}</span>
           </div>
-          <span className="purp center pilltitle">5 NEW WIZARDS DAILY</span>
+          <span className="purp center pilltitle">
+            {AUCTION_COUNT} NEW WIZARDS DAILY
+          </span>
           <div className="wizards">
             {wizards.map((w, idx) => {
               let active = false;
@@ -706,7 +710,7 @@ const Auction = () => {
           <div className="abt wide">
             <div className="p sbs">
               <h1 style={{ lineHeight: "5rem" }}>
-                5 Wizards everyday. 2000 ever.
+                {AUCTION_COUNT} Wizards everyday. 2000 ever.
               </h1>
               <img src="/static/img/wiz.svg" />
             </div>
@@ -749,19 +753,20 @@ const Auction = () => {
                   </Accordion.Header>
                   <Accordion.Body>
                     <p>
-                      WizardsDAO will be auctioning 5 wizards on-chain every 24
-                      hours until 2000 are minted. 90% of auction proceeds (ETH)
-                      are automatically deposited into the WizardsDAO treasury
-                      (Gnosis Safe multi-sig), where they are governed by wizard
-                      owners.
+                      WizardsDAO is auctioning {AUCTION_COUNT} wizards on-chain
+                      every 24 hours until 2000 are minted. 90% of auction
+                      proceeds (ETH) are automatically deposited into the
+                      WizardsDAO treasury (Gnosis Safe multi-sig), where they
+                      are governed by wizard owners.
                     </p>
 
                     <p>
                       Whenever an auction is settled, the transaction will also
-                      cause 5 new wizards to be minted and a new 24 hour auction
-                      to begin. While settlement is most heavily incentivized
-                      for any winning bidder, it can be triggered by anyone,
-                      allowing the system to trustlessly auction wizards.
+                      cause {AUCTION_COUNT} new wizards to be minted and a new
+                      24 hour auction to begin. While settlement is most heavily
+                      incentivized for any winning bidder, it can be triggered
+                      by anyone, allowing the system to trustlessly auction
+                      wizards.
                     </p>
                   </Accordion.Body>
                 </Accordion.Item>
@@ -810,7 +815,7 @@ const Auction = () => {
                     <ul style={{ marginLeft: "30px" }}>
                       <li>Backgrounds (3)</li>
                       <li>Background Items (6)</li>
-                      <li>Accessories (8)</li>
+                      <li>Accessories (7)</li>
                       <li>Bodies (13)</li>
                       <li>Clothes (20)</li>
                       <li>Mouths (16)</li>
@@ -1152,13 +1157,13 @@ const Auction = () => {
         }
         .wizards {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           max-width: 400px;
           margin: 1.6rem auto;
           text-align: center;
         }
         .wizards .thumb {
-          margin: 0;
+          margin: 10px;
           transition: all 0.2s ease;
         }
         .wizards .thumb img {

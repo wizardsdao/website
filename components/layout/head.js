@@ -16,13 +16,13 @@ const AppHead = (props) => {
       <meta name="twitter:title" content="WizardsDAO" />
       <meta
         name="twitter:description"
-        content="5 Wizards every day. 2000 ever."
+        content="Professional Degenerates. CC0."
       />
       <meta
         name="twitter:image"
         content="https://wizardsdao.com/static/img/ogimg.jpg"
       />
-      <meta property="og:title" content="5 Wizards every day. 2000 ever." />
+      <meta property="og:title" content="Professional Degenerates. CC0." />
       <meta
         property="og:image"
         content="https://wizardsdao.com/static/img/ogimg.jpg"
@@ -30,7 +30,7 @@ const AppHead = (props) => {
       <meta property="og:url" content="https://wizardsdao.com" />
       <meta
         property="og:description"
-        content="5 Wizards every day. 2000 ever."
+        content="Professional Degenerates. CC0."
       />
       <meta
         name="viewport"

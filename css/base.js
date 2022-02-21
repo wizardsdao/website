@@ -501,6 +501,9 @@ const style = css.global`
   body:hover {
     cursor: url("/static/img/cursor.png"), move !important;
   }
+  body:active {
+    cursor: url("/static/img/cursor-active.png"), move !important;
+  }
 `;
 
 export default style;

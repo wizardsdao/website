@@ -6,6 +6,7 @@ import { ethers } from "@usedapp/core/node_modules/ethers";
 // avg blocks per day are about 6_500, give some space for extended auctions
 const BLOCKS_PER_DAY = 8_000;
 const BLOCKS_PER_HOUR = 240;
+const AUCTION_COUNT = 3;
 
 // record whether we've made our first call to api provider
 let polled = false;
@@ -214,7 +215,7 @@ export default function useAuctionHouseSubscriber() {
     };
 
     auctionCreated[aId] = wiz;
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= AUCTION_COUNT; i++) {
       // prevent page renders by making sure we only dispatch when all 5 auctions are loaded
       // this is really only important when a new auction or the first auction is started
       // so is more of an optimization but it really improves the experience
@@ -225,13 +226,13 @@ export default function useAuctionHouseSubscriber() {
     }
 
     let col = [];
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= AUCTION_COUNT; i++) {
       col.push(auctionCreated[i]);
     }
 
     dispatchCreatedEvents({ events: col });
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= AUCTION_COUNT; i++) {
       // undo key reset so we only update on batched created events
       auctionCreated[i] = false;
     }
@@ -289,7 +290,7 @@ export default function useAuctionHouseSubscriber() {
         0 - getBlocks()
       );
 
-      const latest = cae.slice(-5);
+      const latest = cae.slice(-AUCTION_COUNT);
       for (let i = 0; i < latest.length; i++) {
         const e = latest[i];
 
@@ -315,7 +316,7 @@ export default function useAuctionHouseSubscriber() {
         0 - getBlocks()
       );
 
-      const latest = cae.slice(-5);
+      const latest = cae.slice(-AUCTION_COUNT);
       for (let i = 0; i < latest.length; i++) {
         const e = latest[i];
         processAuctionExtended(e.args.wizardId, e.args.aId, e.args.endTime);
@@ -333,7 +334,7 @@ export default function useAuctionHouseSubscriber() {
         0 - getBlocks()
       );
 
-      const latest = cae.slice(-5);
+      const latest = cae.slice(-AUCTION_COUNT);
 
       const lastSettled = "";
       for (let i = 0; i < latest.length; i++) {
