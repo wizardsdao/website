@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState, memo } from "react";
 import { ethers } from "ethers";
+import BigNumber from "bignumber.js";
 
 let gotBalance = false;
 const Footer = () => {
@@ -12,7 +13,11 @@ const Footer = () => {
         "0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20" // the money address
       );
       gotBalance = true;
-      setBalance(ethers.utils.formatUnits(balance || 0, "ether"));
+      setBalance(
+        new BigNumber(ethers.utils.formatUnits(balance || 0, "ether")).toFixed(
+          2
+        )
+      );
     };
 
     if (!gotBalance) {
@@ -31,7 +36,7 @@ const Footer = () => {
             </a>
           </li>
           <li className="p">
-            <a href="https://snapshot.org/#/wizdao.eth">The DAO</a>
+            <a href="https://snapshot.org/#/wizdao.eth">Proposals</a>
           </li>
           <li className="p">
             <a href="https://twitter.com/wizardsdao">Twitter</a>

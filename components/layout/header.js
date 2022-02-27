@@ -1,10 +1,14 @@
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ethers } from "ethers";
 import Logo from "../brand/logo";
 import { TailSpin } from "../loader";
+import { format } from "date-fns";
+import BigNumber from "bignumber.js";
+import { Twitter, Instagram, Discord, OpenSea } from "../brand/thirdparty";
 
 let gotBalance = false;
 const Header = (props) => {
+  const mobileMenu = useRef(null);
   const [tBalance, setBalance] = useState("");
   useEffect(() => {
     const fn = async () => {
@@ -13,13 +17,30 @@ const Header = (props) => {
         "0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20" // the money address
       );
       gotBalance = true;
-      setBalance(ethers.utils.formatUnits(balance || 0, "ether"));
+      setBalance(
+        new BigNumber(ethers.utils.formatUnits(balance || 0, "ether")).toFixed(
+          2
+        )
+      );
     };
 
     if (!gotBalance) {
       fn();
     }
   }, [props.title]);
+
+  const mobileToggle = (e) => {
+    e.preventDefault();
+    const container = document.querySelector("html");
+    if (container.classList.contains("no-scroll")) {
+      container.classList.remove("no-scroll");
+      mobileMenu.current.classList.remove("open");
+      return;
+    }
+
+    container.classList.add("no-scroll");
+    mobileMenu.current.classList.add("open");
+  };
 
   return (
     <>
@@ -75,13 +96,18 @@ const Header = (props) => {
             </li>
             <li className="hidden-mobile">
               <a className="nav-link" href="https://snapshot.org/#/wizdao.eth">
-                The DAO
+                Proposals
               </a>
+            </li>
+            <li className="ham hidden-desktop">
+              <button type="button" onClick={mobileToggle}>
+                X
+              </button>
             </li>
             {(() => {
               if (!props.web3Connected) {
                 return (
-                  <li>
+                  <li className="hidden-mobile">
                     <button
                       type="button"
                       className="nav-link btn wc"
@@ -94,7 +120,7 @@ const Header = (props) => {
               }
 
               return (
-                <li>
+                <li className="hidden-mobile">
                   <button
                     type="button"
                     className="nav-link btn wc"
@@ -107,8 +133,155 @@ const Header = (props) => {
             })()}
           </ul>
         </nav>
+        <div className="mobile-menu hidden" ref={mobileMenu}>
+          <div className="mm-header">
+            <Logo href="#" />
+            <button type="button" onClick={mobileToggle}>
+              x
+            </button>
+          </div>
+          <nav className="mm">
+            <ul>
+              <li>
+                <a
+                  className="nav-link"
+                  href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20"
+                >
+                  The Money
+                  <span
+                    style={{
+                      fontFamily: "sans-serif",
+                      marginLeft: "1rem",
+                      position: "relative",
+                      top: "-0.5px",
+                    }}
+                  >
+                    {"Ξ "}
+                  </span>
+                  {(() => {
+                    if (tBalance) {
+                      return tBalance;
+                    }
+
+                    return (
+                      <TailSpin
+                        height={15}
+                        width={15}
+                        style={{
+                          position: "relative",
+                          top: "1px",
+                          left: "5px",
+                        }}
+                      />
+                    );
+                  })()}
+                </a>
+              </li>
+              <li>
+                <a
+                  className="nav-link"
+                  href="https://snapshot.org/#/wizdao.eth"
+                >
+                  Proposals
+                </a>
+              </li>
+              <li>
+                <a className="nav-link" href="https://github.com/wizardsdao">
+                  GitHub
+                </a>
+              </li>
+              <li>
+                <a
+                  className="nav-link"
+                  href="https://etherscan.io/address/0xC23b12EBA3af92dc3Ec94744c0c260caD0EeD0e5"
+                >
+                  Etherscan
+                </a>
+              </li>
+              <li>
+                <a
+                  className="nav-link flex"
+                  href="https://twitter.com/WizardsDAO"
+                >
+                  <div>Twitter</div>
+                  <Twitter style={{ height: 20, alignSelf: "center" }} />
+                </a>
+              </li>
+              <li>
+                <a
+                  className="nav-link flex"
+                  href="http://discord.gg/wizardsdao"
+                >
+                  <div>Discord</div>
+                  <Discord style={{ height: 20, alignSelf: "center" }} />
+                </a>
+              </li>
+              <li>
+                <a
+                  className="nav-link flex"
+                  href="https://www.instagram.com/wizardsdao/"
+                >
+                  <div>Instagram</div>
+                  <Instagram style={{ height: 20, alignSelf: "center" }} />
+                </a>
+              </li>
+              <li>
+                <a
+                  className="nav-link flex"
+                  href="https://opensea.io/collection/wizardsdao"
+                >
+                  <div>OpenSea</div>
+                  <OpenSea style={{ height: 20, alignSelf: "center" }} />
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div className="pull">
+            {(() => {
+              if (!props.web3Connected) {
+                return (
+                  <button
+                    type="button"
+                    className="nav-link btn wc action"
+                    onClick={props.walletConnectClick}
+                  >
+                    Connect wallet
+                  </button>
+                );
+              }
+
+              return (
+                <button
+                  type="button"
+                  className="nav-link btn wc action"
+                  onClick={props.walletDisconnectClick}
+                >
+                  Disconnect wallet
+                </button>
+              );
+            })()}
+          </div>
+        </div>
       </header>
+      <style jsx global>{`
+        .no-scroll {
+          overflow-y: hidden;
+        }
+      `}</style>
       <style jsx>{`
+        .logo {
+          position: relative;
+          top: -1px;
+        }
+        .addendum p {
+          margin: 0;
+          padding: 0 15px;
+          margin-top: 1rem;
+          opacity: 0.6;
+        }
+        .addendum p:last-child {
+          margin-top: 0;
+        }
         .wli {
           margin: 0 30px;
         }
@@ -147,9 +320,6 @@ const Header = (props) => {
           flex-direction: row;
           justify-content: flex-end;
         }
-        .logo {
-          padding: 0 0.66rem;
-        }
         ul {
           padding: 0;
         }
@@ -157,6 +327,11 @@ const Header = (props) => {
           display: inline-block;
           padding: 0 0.66rem;
           font-weight: 400;
+        }
+        @media (max-width: 992px) {
+          ul li {
+            padding: 0;
+          }
         }
         ul li:last-child {
           padding-right: 0;
@@ -170,6 +345,13 @@ const Header = (props) => {
           display: block;
           color: black;
         }
+        .mm .nav-link {
+          font-size: 1.16rem;
+        }
+        .mm .nav-link:focus {
+          border: none;
+          outline: none;
+        }
         .nav-link:hover {
           border-bottom: 1px solid #000;
         }
@@ -179,6 +361,62 @@ const Header = (props) => {
         .btn {
           color: #fff !important;
           border: 1px solid #5625a4;
+        }
+        .mm ul {
+          margin: 0;
+          margin-top: 1rem;
+          width: 100%;
+        }
+        .mm li {
+          width: 100%;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          font-size: 1.16rem;
+        }
+        .mm li a {
+          padding: 10px 15px !important;
+          display: inline-block;
+          width: 100%;
+        }
+        .flex {
+          display: flex !important;
+          justify-content: space-between;
+        }
+        .mm-header {
+          display: flex;
+          justify-content: space-between;
+          padding: 10px 15px;
+        }
+        .mobile-menu {
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          background: #e0c1ff;
+          width: 100%;
+          height: 100%;
+          z-index: 999;
+          transition: all 0.2s ease;
+          opacity: 0;
+          visibility: hidden;
+        }
+        .mobile-menu nav {
+          padding: 0 15px;
+        }
+        .open {
+          opacity: 1;
+          visibility: visible;
+        }
+        .pull {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          bottom: 2rem;
+          width: 100%;
+        }
+
+        .action {
+          box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.2);
         }
       `}</style>
     </>
