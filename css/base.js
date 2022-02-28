@@ -9,7 +9,22 @@ const style = css.global`
     font-style: normal;
     font-display: swap;
   }
-
+  @font-face {
+    font-family: "PT Root";
+    src: url("/static/fonts/PT-Root-UI_Medium.woff2") format("woff2"),
+      url("/static/fonts/PT-Root-UI_Medium.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "PT Root Bold";
+    src: url("/static/fonts/PT-Root-UI_Bold.woff2") format("woff2"),
+      url("/static/fonts/PT-Root-UI_Bold.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
   :root {
     --blue-1: #0062ff;
     --blue-2: #0af;
@@ -17,7 +32,6 @@ const style = css.global`
     --green-1: #05ca21;
     --green-2: #02d16a;
   }
-
   /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
   html,
   body {
@@ -28,10 +42,9 @@ const style = css.global`
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     width: 100%;
-    font-family: "VCR OSD Mono";
   }
   body {
-    margin: 0;    
+    margin: 0;
     background: #e0c1ff !important;
   }
   .p {
@@ -206,11 +219,11 @@ const style = css.global`
     -moz-text-size-adjust: auto;
     -ms-text-size-adjust: auto;
     text-size-adjust: auto;
-    font-family: "VCR OSD Mono"
+    font-family: "PT Root", sans-serif;
     color: #212121;
   }
   header {
-    background: #E0C1FF;
+    background: #e0c1ff;
   }
   @media (max-width: 767px) {
     body {
@@ -264,12 +277,16 @@ const style = css.global`
   }
   h1,
   h2,
-  h3,
+  h3 {
+    font-family: "VCR OSD Mono", monospace;
+  }
+
   h4,
   h5,
   h6 {
-    font-family: "VCR OSD Mono"
+    font-family: "PT Root Bold", sans-serif;
   }
+
   h1 {
     font-size: 55px;
     line-height: 70px;
@@ -389,7 +406,7 @@ const style = css.global`
     font-size: 16px;
     line-height: 25px;
     border: 1px solid rgb(196, 207, 214);
-    background: #5625A4;
+    background: #5625a4;
     font-weight: 500;
     border-radius: 6px;
     text-decoration: none;
@@ -441,11 +458,11 @@ const style = css.global`
   }
   .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Old versions of Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
   }
   .btn.disabled {
@@ -495,14 +512,19 @@ const style = css.global`
       padding-right: 0;
     }
   }
-  * {
-    font-family: "VCR OSD Mono"
-  }
   body:hover {
     cursor: url("/static/img/cursor.png"), move !important;
   }
   body:active {
     cursor: url("/static/img/cursor-active.png"), move !important;
+  }
+  @media (min-width: 1400px) {
+    .container,
+    .container-lg,
+    .container-xl,
+    .container-xxl {
+      max-width: 1140px !important;
+    }
   }
 `;
 

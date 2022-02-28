@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import BigNumber from "bignumber.js";
-import { useEns } from "../hooks/useEns";
-import { TailSpin } from "./loader";
+import { useEns } from "../../hooks/useEns";
+import { TailSpin } from "../loader";
 import { useEffect } from "react";
 
 const bidRow = ({ e, account, loading }) => {
@@ -66,10 +66,9 @@ const bidRow = ({ e, account, loading }) => {
         .br {
           align-items: center;
           background-color: hsla(0, 0%, 100%, 0.3);
-          padding: 0.5rem 1rem;
+          padding: 0.8rem 1rem;
           border-radius: 5px;
-          border-bottom: 1px solid hsla(0, 0%, 82.7%, 0.322);
-          font-size: 0.9rem;
+          font-size: 1.16rem;
           font-weight: 600;
           display: flex;
           font-weight: 600;

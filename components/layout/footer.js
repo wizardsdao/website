@@ -1,38 +1,14 @@
 import React from "react";
-import { useEffect, useState, memo } from "react";
-import { ethers } from "ethers";
-import BigNumber from "bignumber.js";
+import TreasuryBalance from "../treasury/balance";
 
-let gotBalance = false;
 const Footer = () => {
-  const [tBalance, setBalance] = useState("...");
-  useEffect(() => {
-    const fn = async () => {
-      const p = ethers.getDefaultProvider();
-      const balance = await p.getBalance(
-        "0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20" // the money address
-      );
-      gotBalance = true;
-      setBalance(
-        new BigNumber(ethers.utils.formatUnits(balance || 0, "ether")).toFixed(
-          2
-        )
-      );
-    };
-
-    if (!gotBalance) {
-      fn();
-    }
-  });
-
   return (
     <>
       <footer className="p hidden-mobile">
         <ul>
           <li className="p">
             <a href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20">
-              The Money <span style={{ fontFamily: "sans-serif" }}>{"Ξ "}</span>
-              {tBalance}
+              <TreasuryBalance />
             </a>
           </li>
           <li className="p">
@@ -55,8 +31,7 @@ const Footer = () => {
         <ul>
           <li className="p">
             <a href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20">
-              The Money <span style={{ fontFamily: "sans-serif" }}>{"Ξ "}</span>
-              {tBalance}
+              <TreasuryBalance />
             </a>
           </li>
           <li className="p">
@@ -106,6 +81,7 @@ const Footer = () => {
           margin: 0;
           padding: 0;
           display: inline-flex;
+          align-items: center;
           gap: 30px;
         }
         .a {
@@ -173,4 +149,4 @@ const Footer = () => {
   );
 };
 
-export default memo(Footer);
+export default Footer;

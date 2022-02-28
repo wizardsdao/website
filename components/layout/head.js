@@ -8,7 +8,6 @@ const AppHead = (props) => {
         if (props.noIndex) {
           return <meta name="robots" content="noindex, nofollow" />;
         }
-
         return <meta name="robots" content="index, follow" />;
       })()}
       <meta name="twitter:card" content="summary_large_image" />

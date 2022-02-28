@@ -14,25 +14,12 @@ const Logo = ({ style, href }) => (
         margin: 0;
         font-weight: bold;
       }
-      .logo-emo {
-        position: relative;
-        right: -5px;
-      }
       a {
         display: flex;
         align-items: center;
       }
       .s {
         width: 130px;
-      }
-      a,
-      a:hover,
-      a:focus,
-      a:visited {
-        color: #000;
-      }
-      a:hover {
-        text-decoration: none;
       }
     `}</style>
   </>

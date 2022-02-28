@@ -17,8 +17,8 @@ const AuctionInput = ({
   poll,
   paused,
 }) => {
+  const placeholderRef = useRef(null);
   const bidInputRef = useRef(null);
-  const [bidInput, setBidInput] = useState(minBidEth);
   const [auctionEnded, setAuctionEnded] = useState(false);
   const [auctionTimer, setAuctionTimer] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,7 +33,11 @@ const AuctionInput = ({
       return;
     }
 
-    setBidInput(event.target.value);
+    if (input === "") {
+      placeholderRef.current.style.display = "block";
+    } else {
+      placeholderRef.current.style.display = "none";
+    }
   }
 
   async function handleBidClick(e) {
@@ -289,26 +293,23 @@ const AuctionInput = ({
     setBidError("");
   }, [JSON.stringify(wizard)]);
 
-  useEffect(() => {
-    setBidInput(minBidEth);
-  }, [minBidEth]);
-
   return (
     <>
       <div className="input-group">
+        <span className="bid-placeholder" ref={placeholderRef}>
+          <span className="eth">Ξ</span> {minBidEth} min bid
+        </span>
         <input
           disabled={auctionEnded ? true : false}
           ref={bidInputRef}
-          className="bid-input"
           type="number"
           min="0"
-          placeholder={bidInput}
+          className="form-control bid-input"
           onFocus={() => {
             setBidError("");
           }}
           onChange={handleBidInputChange}
         />
-        <span className="bid-placeholder">ETH</span>
         <button
           disabled={!web3React.active}
           type="button"
@@ -336,7 +337,9 @@ const AuctionInput = ({
               return <TailSpin width={30} />;
             }
 
-            return auctionEnded && !inactiveAuction ? "Settle" : "Bid";
+            return auctionEnded && !inactiveAuction
+              ? "Settle auction"
+              : "Place bid";
           })()}
         </button>
       </div>
@@ -346,80 +349,6 @@ const AuctionInput = ({
         </div>
       ) : null}
       <style jsx>{`
-        input:disabled {
-          background: #eee;
-          border-color: #333;
-        }
-        .mbs {
-          margin-bottom: 0.5rem;
-        }
-        .input-group {
-          margin-bottom: 1rem;
-        }
-        .input-group .btn {
-          position: relative;
-          z-index: 2;
-          margin-left: 1rem !important;
-          border-radius: 6px !important;
-          width: 40%;
-          height: 3rem;
-          border: transparent;
-        }
-        .btn:disabled {
-          pointer-events: none;
-          opacity: 0.65;
-        }
-        .bid-placeholder {
-          margin-left: -1px;
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-          position: absolute;
-          top: 25%;
-          left: 43%;
-          font-weight: 700;
-          color: #aaa;
-          z-index: 3;
-        }
-        @media (max-width: 992px) {
-          .bid-placeholder {
-            top: 20%;
-            left: 44%;
-          }
-
-          .wizard {
-            width: 100%;
-            padding: 0;
-          }
-        }
-        .bid-input {
-          position: relative;
-          flex: 1 1 auto;
-          width: 1%;
-          min-width: 0;
-          height: 3.02rem;
-          color: #000;
-          border: 1 px solid #aaa !important;
-          border-radius: 0.25 rem !important;
-          background-color: #fff;
-          font-size: 1.5rem;
-          outline: none !important;
-          box-shadow: none !important;
-        }
-        .input-group {
-          position: relative;
-          display: flex;
-          flex-wrap: wrap;
-          align-items: stretch;
-          width: 100%;
-        }
-        .btn {
-          background: #171717;
-          color: #fff !important;
-          border: 1px solid #000;
-          font-weight: 600;
-        }
         .bid-error {
           background: red;
           border-radius: 6px;
@@ -432,6 +361,44 @@ const AuctionInput = ({
             Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans",
             "Helvetica Neue", sans-serif !important;
           margin: 0;
+        }
+        .bid-placeholder {
+          position: absolute;
+          opacity: 0.5;
+          font-size: 1.16rem;
+          top: 30%;
+          left: 5%;
+          z-index: 1;
+          pointer-events: none;
+        }
+        .eth {
+          font-family: sans-serif;
+        }
+        .btn {
+          width: auto;
+          margin-left: 0.6rem !important;
+          background: #171717;
+          color: #fff !important;
+          border: 1px solid #000;
+          border-radius: 6px !important;
+          font-size: 1.16rem;
+        }
+        .bid-input {
+          padding: 0.6rem 1rem;
+          border-radius: 6px !important;
+          height: 54px;
+          font-size: 1.16rem;
+        }
+
+        input,
+        .btn {
+          opacity: 0.75;
+        }
+
+        @media (max-width: 568px) {
+          .bid-placeholder {
+            top: 24%;
+          }
         }
       `}</style>
     </>

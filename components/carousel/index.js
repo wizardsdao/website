@@ -20,7 +20,6 @@ const Marquee = ({ imgs }) => {
         img {
           height: 95px;
         }
-
         .img-container {
           padding: 1rem;
           border-radius: 6px;

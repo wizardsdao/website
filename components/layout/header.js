@@ -1,33 +1,10 @@
-import { useEffect, useState, useRef } from "react";
-import { ethers } from "ethers";
+import { useRef } from "react";
 import Logo from "../brand/logo";
-import { TailSpin } from "../loader";
-import { format } from "date-fns";
-import BigNumber from "bignumber.js";
 import { Twitter, Instagram, Discord, OpenSea } from "../brand/thirdparty";
+import TreasuryBalance from "../treasury/balance";
 
-let gotBalance = false;
 const Header = (props) => {
   const mobileMenu = useRef(null);
-  const [tBalance, setBalance] = useState("");
-  useEffect(() => {
-    const fn = async () => {
-      const p = ethers.getDefaultProvider();
-      const balance = await p.getBalance(
-        "0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20" // the money address
-      );
-      gotBalance = true;
-      setBalance(
-        new BigNumber(ethers.utils.formatUnits(balance || 0, "ether")).toFixed(
-          2
-        )
-      );
-    };
-
-    if (!gotBalance) {
-      fn();
-    }
-  }, [props.title]);
 
   const mobileToggle = (e) => {
     e.preventDefault();
@@ -44,23 +21,6 @@ const Header = (props) => {
 
   return (
     <>
-      {(() => {
-        if (props.isWhitelist) {
-          return (
-            <div className="wlday">
-              <marquee>
-                <span className="wli">Today is a whitelist day 🥳</span>
-                <span className="wli">Today is a whitelist day 🥳</span>
-                <span className="wli">Today is a whitelist day 🥳</span>
-                <span className="wli">Today is a whitelist day 🥳</span>
-                <span className="wli">Today is a whitelist day 🥳</span>
-                <span className="wli">Today is a whitelist day 🥳</span>
-                <span className="wli">Today is a whitelist day 🥳</span>
-              </marquee>
-            </div>
-          );
-        }
-      })()}
       <header className="top">
         <div className="start">
           <div className="logo">
@@ -74,24 +34,10 @@ const Header = (props) => {
           >
             <li className="hidden-mobile">
               <a
-                className="nav-link"
+                className="nav-link balance"
                 href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20"
               >
-                The Money{" "}
-                <span style={{ fontFamily: "sans-serif" }}>{"Ξ "}</span>
-                {(() => {
-                  if (tBalance) {
-                    return tBalance;
-                  }
-
-                  return (
-                    <TailSpin
-                      height={15}
-                      width={15}
-                      style={{ position: "relative", top: "1px", left: "5px" }}
-                    />
-                  );
-                })()}
+                <TreasuryBalance />
               </a>
             </li>
             <li className="hidden-mobile">
@@ -147,34 +93,7 @@ const Header = (props) => {
                   className="nav-link"
                   href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20"
                 >
-                  The Money
-                  <span
-                    style={{
-                      fontFamily: "sans-serif",
-                      marginLeft: "1rem",
-                      position: "relative",
-                      top: "-0.5px",
-                    }}
-                  >
-                    {"Ξ "}
-                  </span>
-                  {(() => {
-                    if (tBalance) {
-                      return tBalance;
-                    }
-
-                    return (
-                      <TailSpin
-                        height={15}
-                        width={15}
-                        style={{
-                          position: "relative",
-                          top: "1px",
-                          left: "5px",
-                        }}
-                      />
-                    );
-                  })()}
+                  <TreasuryBalance />
                 </a>
               </li>
               <li>
@@ -414,9 +333,11 @@ const Header = (props) => {
           bottom: 2rem;
           width: 100%;
         }
-
         .action {
           box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.2);
+        }
+        .nav-link.balance:hover {
+          border-bottom: none;
         }
       `}</style>
     </>
