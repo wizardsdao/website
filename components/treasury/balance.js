@@ -6,8 +6,8 @@ import { TailSpin } from "../loader";
 const TREASURY_ADDR = "0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20";
 let gotBalance = false;
 
-const TreasuryBalance = () => {
-  const [tBalance, setBalance] = useState("...");
+const TreasuryBalance = ({ pill }) => {
+  const [tBalance, setBalance] = useState("......");
 
   useEffect(() => {
     const fn = async () => {
@@ -27,8 +27,10 @@ const TreasuryBalance = () => {
     }
   });
 
+  let cname = pill ? "treasury-pill" : "treasury";
+
   return (
-    <div className="treasury">
+    <div className={cname}>
       <span className="t-label">Treasury</span>{" "}
       <span style={{ fontFamily: "sans-serif" }}>{"Ξ "}</span>
       {(() => {
@@ -45,27 +47,24 @@ const TreasuryBalance = () => {
         );
       })()}
       <style jsx>{`
-        .treasury {
-          border: 1px solid rgba(0, 0, 0, 0.3);
+        .treasury-pill {
+          border: 1px solid #12004c;
           padding: 3px 6px;
           border-radius: 6px;
           transition: all 300ms ease;
         }
-
-        .treasury:hover {
-          border-color: #5625a4;
+        .treasury-pill:hover {
+          background: rgba(255, 255, 255, 0.4);
         }
 
         .t-label {
-          opacity: 0.5;
           position: relative;
           top: -0.5px;
           margin-right: 3px;
           transition: all 300ms ease;
         }
 
-        .treasury:hover .t-label {
-          color: #5625a4;
+        .treasury-pill:hover .t-label {
           opacity: 1;
         }
       `}</style>

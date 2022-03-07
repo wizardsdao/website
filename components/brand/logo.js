@@ -5,7 +5,11 @@ const Logo = ({ style, href }) => (
     <div style={style}>
       <Link href={href || "/"}>
         <a className="logo">
-          <img className="s" alt="wizardsdao" src="/static/img/logo.svg" />
+          <img
+            className="s"
+            alt="wizardsdao"
+            src="/static/img/logo_white.svg"
+          />
         </a>
       </Link>
     </div>
@@ -19,7 +23,9 @@ const Logo = ({ style, href }) => (
         align-items: center;
       }
       .s {
-        width: 130px;
+        height: 18px;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
       }
     `}</style>
   </>

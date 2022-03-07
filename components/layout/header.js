@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import Link from "next/link";
 import Logo from "../brand/logo";
 import { Twitter, Instagram, Discord, OpenSea } from "../brand/thirdparty";
 import TreasuryBalance from "../treasury/balance";
@@ -37,12 +38,30 @@ const Header = (props) => {
                 className="nav-link balance"
                 href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20"
               >
-                <TreasuryBalance />
+                <TreasuryBalance pill />
+              </a>
+            </li>
+            <li className="hidden-mobile">
+              <Link href="/vision">
+                <a className="nav-link">Vision</a>
+              </Link>
+            </li>
+            <li className="hidden-mobile">
+              <a className="nav-link" href="https://discord.gg/wizardsdao">
+                Discord
               </a>
             </li>
             <li className="hidden-mobile">
               <a className="nav-link" href="https://snapshot.org/#/wizdao.eth">
                 Proposals
+              </a>
+            </li>
+            <li className="hidden-mobile">
+              <a
+                className="nav-link"
+                href="https://twitter.com/WizardsDAOBot/status/1483146932847476738"
+              >
+                Previous Auctions
               </a>
             </li>
             <li className="ham hidden-desktop">
@@ -201,24 +220,10 @@ const Header = (props) => {
         .addendum p:last-child {
           margin-top: 0;
         }
-        .wli {
-          margin: 0 30px;
-        }
-        .wlday {
-          color: #fff;
-          background: #5625a4;
-          padding: 2px 0px;
-        }
-        .wlday marquee {
-          margin: 0;
-          position: relative;
-          top: 2px;
-        }
         li.btn {
           padding: 0.5rem 2rem;
           display: inline-block;
         }
-
         header {
           width: 100%;
           padding: 10px 15px;
@@ -226,6 +231,7 @@ const Header = (props) => {
           justify-content: space-between;
           align-items: center;
           gap: 1rem;
+          height: 62px;
         }
         .start {
           width: auto;
@@ -272,14 +278,13 @@ const Header = (props) => {
           outline: none;
         }
         .nav-link:hover {
-          border-bottom: 1px solid #000;
         }
         .btn.nav-link:hover {
           text-decoration: none;
         }
         .btn {
           color: #fff !important;
-          border: 1px solid #5625a4;
+          border: 1px solid #12004c;
         }
         .mm ul {
           margin: 0;
@@ -310,7 +315,7 @@ const Header = (props) => {
           top: 0;
           left: 0;
           bottom: 0;
-          background: #e0c1ff;
+          background: #12004c;
           width: 100%;
           height: 100%;
           z-index: 999;

@@ -51,20 +51,16 @@ const Footer = () => {
         </ul>
       </footer>
       <style jsx>{`
-        .mob {
-          background: rgb(208, 149, 249);
-        }
         .mob ul {
           display: block;
           align-items: center;
           width: 100%;
         }
-
         .mob ul li {
           text-align: left;
           width: 100%;
-          padding: 0.6rem;
-          border-bottom: 1px solid rgb(222, 185, 253);
+          padding: 0.6rem 15px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.4);
         }
         .mob ul li:last-child {
           border: 0;
@@ -106,9 +102,9 @@ const Footer = () => {
           color: #fff;
           height: auto;
           position: relative;
-          padding: 0.875rem;
           whitespace: no-wrap;
           overflow: auto;
+          margin-top: 1.6rem;
         }
         @media (max-width: 767px) {
           .footer {
@@ -116,9 +112,7 @@ const Footer = () => {
             padding-left: 0;
           }
         }
-        footer.mob {
-          padding: 0.875rem 0;
-        }
+
         .t {
           white-space: nowrap;
           display: flex;
@@ -139,10 +133,11 @@ const Footer = () => {
         a:hover,
         a:visited,
         a:focus {
-          color: #000;
+          color: #f0f0f0;
         }
-        a:hover {
-          text-decoration: underline;
+        a:hover,
+        a:focus {
+          text-decoration: none;
         }
       `}</style>
     </>

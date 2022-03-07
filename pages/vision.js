@@ -1,6 +1,6 @@
 import Layout from "../components/layout/home.js";
 
-const Wtf = () => {
+const Vision = () => {
   return (
     <Layout title={`WizardsDAO - About us`}>
       <p>hello world</p>
@@ -13,4 +13,4 @@ const Wtf = () => {
   );
 };
 
-export default Wtf;
+export default Vision;

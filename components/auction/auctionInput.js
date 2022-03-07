@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { connectContractToSigner } from "@usedapp/core";
+import { connectContractToSigner, useContractFunction } from "@usedapp/core";
 import { ethers } from "ethers";
 import BigNumber from "bignumber.js";
 import { TailSpin } from "svg-loaders-react";
@@ -377,27 +377,42 @@ const AuctionInput = ({
         .btn {
           width: auto;
           margin-left: 0.6rem !important;
-          background: #171717;
+          background: #12004c;
           color: #fff !important;
-          border: 1px solid #000;
+          border: 1px solid #12004c;
           border-radius: 6px !important;
           font-size: 1.16rem;
+          min-width: 175px;
         }
         .bid-input {
           padding: 0.6rem 1rem;
           border-radius: 6px !important;
           height: 54px;
           font-size: 1.16rem;
+          opacity: 0.85;
         }
-
-        input,
-        .btn {
-          opacity: 0.75;
+        .bid-input:focus {
+          border: 1px solid #12004c !important;
+          opacity: 1;
         }
 
         @media (max-width: 568px) {
+          .btn {
+            min-width: 125px;
+            background: #5625a4;
+            color: #fff;
+            border-color: #8653d8;
+          }
           .bid-placeholder {
             top: 24%;
+          }
+          .bid-input {
+            opacity: 1;
+            border-color: #fff;
+          }
+          .bid-placeholder {
+            opacity: 0.4;
+            color: #000;
           }
         }
       `}</style>

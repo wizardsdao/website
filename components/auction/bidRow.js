@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import BigNumber from "bignumber.js";
 import { useEns } from "../../hooks/useEns";
+import Davatar from "@davatar/react";
 import { TailSpin } from "../loader";
 import { useEffect } from "react";
 
@@ -13,13 +14,22 @@ const bidRow = ({ e, account, loading }) => {
 
   useEffect(() => {}, [e.sender]);
 
+  const yourBid = e.sender == account;
+
   return (
     <>
       <li className="br">
         <div className="bi">
-          {loading ? null : state.data || shortAddress}
+          <div className="avatar">
+            <Davatar
+              size={24}
+              address={e.sender}
+              provider={ethers.getDefaultProvider()}
+            />
+          </div>
+          <span>{loading ? null : state.data || shortAddress}</span>
           {(() => {
-            if (!loading && e.sender == account) {
+            if (!loading && yourBid) {
               return <div className="pill">Your bid</div>;
             }
           })()}
@@ -55,17 +65,23 @@ const bidRow = ({ e, account, loading }) => {
         </div>
       </li>
       <style jsx>{`
+        .avatar {
+          margin-right: 10px;
+        }
         .bi {
+          line-height: 15px;
           display: flex;
           align-items: center;
           font-weight: 500;
         }
         .bi-cost {
           font-weight: 500;
+          position: relative;
+          top: 1px;
         }
         .br {
           align-items: center;
-          background-color: hsla(0, 0%, 100%, 0.3);
+          background: rgba(255, 255, 255, 0.4);
           padding: 0.8rem 1rem;
           border-radius: 5px;
           font-size: 1.16rem;
@@ -73,6 +89,10 @@ const bidRow = ({ e, account, loading }) => {
           display: flex;
           font-weight: 600;
           justify-content: space-between;
+          margin: 10px 0;
+        }
+        .br:first-child {
+          margin: 0;
         }
         .pill {
           background: #f9b42b;
@@ -80,6 +100,15 @@ const bidRow = ({ e, account, loading }) => {
           border-radius: 1rem;
           margin-left: 15px;
           font-size: 11px;
+        }
+        .bi span {
+          position: relative;
+          top: 1px;
+        }
+        @media (max-width: 568px) {
+          .br {
+            background: rgba(24, 10, 87);
+          }
         }
       `}</style>
     </>

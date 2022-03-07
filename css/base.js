@@ -45,7 +45,7 @@ const style = css.global`
   }
   body {
     margin: 0;
-    background: #e0c1ff !important;
+    background: #12004c !important;
   }
   .p {
     padding: 0.875rem;
@@ -214,16 +214,15 @@ const style = css.global`
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #fff;
     -webkit-text-size-adjust: auto;
     -moz-text-size-adjust: auto;
     -ms-text-size-adjust: auto;
     text-size-adjust: auto;
     font-family: "PT Root", sans-serif;
-    color: #212121;
+    color: #f0f0f0;
   }
   header {
-    background: #e0c1ff;
+    background: #12004c;
   }
   @media (max-width: 767px) {
     body {
@@ -406,7 +405,7 @@ const style = css.global`
     font-size: 16px;
     line-height: 25px;
     border: 1px solid rgb(196, 207, 214);
-    background: #5625a4;
+    background: #12004c;
     font-weight: 500;
     border-radius: 6px;
     text-decoration: none;

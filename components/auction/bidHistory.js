@@ -15,6 +15,7 @@ const BidHistory = ({ wizard, web3React }) => {
               if (wizard.bids[i]) {
                 ret.push(
                   <BidRow
+                    className="br"
                     key={wizard.bids[i].value.toString()}
                     e={wizard.bids[i]}
                     account={web3React.account}
@@ -41,6 +42,9 @@ const BidHistory = ({ wizard, web3React }) => {
         .title {
           margin: 1rem 0 0.6rem 0;
           opacity: 0.65;
+        }
+        .br {
+          margin: 10px 0;
         }
       `}</style>
     </div>

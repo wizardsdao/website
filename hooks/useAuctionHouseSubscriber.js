@@ -414,13 +414,8 @@ export default function useAuctionHouseSubscriber() {
     wizardTokenContract,
     setTimerLength,
     dispatchBidEvents,
-    dispatchCreatedEvents,
-    dispatchExtendedEvents,
-    dispatchSettledEvents,
     poll,
     paused,
-    reachedCap,
     loading,
-    setLoading,
   ];
 }
