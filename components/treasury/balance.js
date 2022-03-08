@@ -2,16 +2,18 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import BigNumber from "bignumber.js";
 import { TailSpin } from "../loader";
+import { useProvider } from "../../hooks/useProvider";
 
 const TREASURY_ADDR = "0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20";
 let gotBalance = false;
 
 const TreasuryBalance = ({ pill }) => {
+  const p = useProvider();
   const [tBalance, setBalance] = useState("......");
 
   useEffect(() => {
     const fn = async () => {
-      const p = ethers.getDefaultProvider();
+      if (!p) return;
       const balance = await p.getBalance(TREASURY_ADDR);
 
       gotBalance = true;

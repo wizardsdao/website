@@ -4,8 +4,10 @@ import { useEns } from "../../hooks/useEns";
 import Davatar from "@davatar/react";
 import { TailSpin } from "../loader";
 import { useEffect } from "react";
+import { useProvider } from "../../hooks/useProvider";
 
 const bidRow = ({ e, account, loading }) => {
+  const p = useProvider();
   const state = useEns(e.sender);
 
   const shortAddress = [e.sender.substr(0, 4), e.sender.substr(38, 4)].join(
@@ -24,7 +26,7 @@ const bidRow = ({ e, account, loading }) => {
             <Davatar
               size={24}
               address={e.sender}
-              provider={ethers.getDefaultProvider()}
+              provider={p || ethers.getDefaultProvider()}
             />
           </div>
           <span>{loading ? null : state.data || shortAddress}</span>

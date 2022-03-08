@@ -3,7 +3,7 @@ import Link from "next/link";
 import Auction from "../components/auction/auction";
 import Web3 from "./web3";
 import Feature from "./brand/feature.js";
-import Marquee from "./marquee/marquee.js";
+import Section from "./landing/section";
 
 const AUCTION_COUNT = 3;
 const AuctionPage = ({
@@ -19,21 +19,39 @@ const AuctionPage = ({
       walletDisconnectClick={onWalletDisconnect}
     >
       <Auction web3React={web3React} />
-      <div className="row m">
-        <Feature text={"Say hello to the"} />
-        <div className="container-md section typo">
-          <h2>High council of the Metaverse</h2>
-          <p>
-            The Wizards work tirelessly to spread their magic across the
-            metaverse. You can find us congregating in our castle on sandbox,
-            smoking on the porch in webb land, and chilling in Discord.
-          </p>
-          <Link href="/vision">
-            <a>Our Vision →</a>
-          </Link>
+      <div className="container">
+        <div className="row m">
+          <Feature text={"HOW IT WORKS"} />
+          <Section img={"https://via.placeholder.com/600x400"}>
+            <h2>Auctions</h2>
+            <p>
+              WizardsDAO auctions 3 wizards on-chain every 24 hours until a max
+              supply of 2000 is reached.
+            </p>
+          </Section>
+          <Section img={"https://via.placeholder.com/600x400"} reverse>
+            <h2>The DAO</h2>
+            <p>
+              WizardsDAO auctions 3 wizards on-chain every 24 hours until a max
+              supply of 2000 is reached.
+            </p>
+          </Section>
+          <Section img={"https://via.placeholder.com/600x400"}>
+            <h2>On-Chain Art</h2>
+            <p>
+              WizardsDAO auctions 3 wizards on-chain every 24 hours until a max
+              supply of 2000 is reached.
+            </p>
+          </Section>
+          <Section img={"https://via.placeholder.com/600x400"} reverse>
+            <h2>Creator Rewards</h2>
+            <p>
+              WizardsDAO auctions 3 wizards on-chain every 24 hours until a max
+              supply of 2000 is reached.
+            </p>
+          </Section>
         </div>
       </div>
-      <div className="container"></div>
       <style jsx>{`
         .m {
           margin: 4rem 0;
@@ -41,21 +59,13 @@ const AuctionPage = ({
         .p {
           padding: 0 15px;
         }
-        .section {
-          margin-top: 1.2rem;
-          padding: 2rem;
-          border-radius: 6px;
-          background: rgb(24, 10, 87);
-          max-width: 630px;
-        }
-
-        .typo h2 {
+        h2 {
           max-width: 770px;
           line-height: 48px;
           margin: 0 auto;
         }
-        .typo p,
-        .typo a {
+        p,
+        a {
           margin: 1rem 0;
           color: #fff;
           font-size: 1.32rem;
@@ -70,9 +80,6 @@ const AuctionPage = ({
         }
 
         @media (max-width: 568px) {
-          .section {
-            background: transparent;
-          }
         }
       `}</style>
     </Layout>

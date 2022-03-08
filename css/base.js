@@ -17,14 +17,6 @@ const style = css.global`
     font-style: normal;
     font-display: swap;
   }
-  @font-face {
-    font-family: "PT Root Bold";
-    src: url("/static/fonts/PT-Root-UI_Bold.woff2") format("woff2"),
-      url("/static/fonts/PT-Root-UI_Bold.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
   :root {
     --blue-1: #0062ff;
     --blue-2: #0af;
@@ -283,7 +275,7 @@ const style = css.global`
   h4,
   h5,
   h6 {
-    font-family: "PT Root Bold", sans-serif;
+    font-family: "PT Root", sans-serif;
   }
 
   h1 {

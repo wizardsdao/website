@@ -265,7 +265,7 @@ const Header = (props) => {
           padding-left: 0;
         }
         .nav-link {
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 500;
           display: block;
           color: black;

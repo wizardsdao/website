@@ -21,7 +21,7 @@ const Feature = ({ text }) => (
       .feature {
         padding: 1.6rem 5rem;
         border-radius: 6px;
-        border: 1px solid rgba(255, 255, 255, 0.4);
+        border: 1px solid #fff;
         width: 92.5%;
         max-width: 333px;
         position: relative;
@@ -32,7 +32,7 @@ const Feature = ({ text }) => (
       .ft {
         position: absolute;
         text-align: center;
-        top: -16px;
+        top: -13.5px;
         background: #12004c;
         z-index: 10;
         padding: 0 0.5rem;

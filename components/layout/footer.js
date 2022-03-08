@@ -106,6 +106,7 @@ const Footer = () => {
           overflow: auto;
           margin-top: 1.6rem;
         }
+
         @media (max-width: 767px) {
           .footer {
             justify-content: start;

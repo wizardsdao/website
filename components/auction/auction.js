@@ -253,6 +253,8 @@ const Auction = ({ web3React }) => {
         .activity h3,
         .activity h4 {
           opacity: 0.65;
+          font-size: 1.32rem;
+          line-height: 32px;
         }
         .wizard-img-wrapper {
           width: 100%;
@@ -293,11 +295,12 @@ const Auction = ({ web3React }) => {
           }
 
           .activity {
-            padding-right: calc(var(--bs-gutter-x) * 0.5);
             background: #12004c;
             color: #f0f0f0;
-            padding: 0.16rem 15px;
+            padding: calc(var(--bs-gutter-x) * 1) calc(var(--bs-gutter-x) * 1) 0
+              calc(var(--bs-gutter-x) * 1);
             min-height: auto;
+            margin: 0;
           }
 
           .m-sbs {
@@ -311,6 +314,10 @@ const Auction = ({ web3React }) => {
             font-size: 23px;
             line-height: 36px;
             margin-bottom: 0;
+            display: flex;
+            gap: 6px;
+            position: relative;
+            top: 3px;
           }
 
           .information {

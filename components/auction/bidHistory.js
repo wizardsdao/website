@@ -42,6 +42,8 @@ const BidHistory = ({ wizard, web3React }) => {
         .title {
           margin: 1rem 0 0.6rem 0;
           opacity: 0.65;
+          font-size: 1.32rem;
+          line-height: 32px;
         }
         .br {
           margin: 10px 0;
