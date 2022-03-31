@@ -5,12 +5,12 @@ import BigNumber from "bignumber.js";
 import { TailSpin } from "svg-loaders-react";
 
 const AuctionInput = ({
-  inactiveAuction,
   bidError,
   setBidError,
   auctionHouse,
   wizard,
   web3React,
+  walletConnectClick,
   minBidEth,
   dispatchBidEvents,
   wizards,
@@ -295,77 +295,107 @@ const AuctionInput = ({
 
   return (
     <>
-      <div className="input-group">
-        <span className="bid-placeholder" ref={placeholderRef}>
-          <span className="eth">Ξ</span> {minBidEth} min bid
-        </span>
-        <input
-          disabled={auctionEnded ? true : false}
-          ref={bidInputRef}
-          type="number"
-          min="0"
-          className="form-control bid-input"
-          onFocus={() => {
-            setBidError("");
-          }}
-          onChange={handleBidInputChange}
-        />
-        <button
-          disabled={!web3React.active}
-          type="button"
-          className="btn"
-          onClick={auctionEnded ? handleSettleClick : handleBidClick}
-        >
-          {(() => {
-            if (settling) {
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: "1.6rem",
-                    alignItems: "center",
-                  }}
-                >
-                  <span>Settling</span>
-                  <TailSpin width={30} />
+      {(() => {
+        if (!web3React.active) {
+          return (
+            <div className="input-group">
+              <button
+                type="button"
+                className="btn connect-btn"
+                onClick={walletConnectClick}
+              >
+                Connect wallet
+              </button>
+            </div>
+          );
+        }
+
+        return (
+          <>
+            <div className="input-group">
+              <span className="bid-placeholder" ref={placeholderRef}>
+                <span className="eth">Ξ</span> {minBidEth} min bid
+              </span>
+              <input
+                disabled={auctionEnded ? true : false}
+                ref={bidInputRef}
+                type="number"
+                min="0"
+                className="form-control bid-input"
+                onFocus={() => {
+                  setBidError("");
+                }}
+                onChange={handleBidInputChange}
+              />
+              <button
+                disabled={!web3React.active}
+                type="button"
+                className="btn"
+                onClick={auctionEnded ? handleSettleClick : handleBidClick}
+              >
+                {(() => {
+                  if (settling) {
+                    return (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          gap: "1.6rem",
+                          alignItems: "center",
+                        }}
+                      >
+                        <span>Settling</span>
+                        <TailSpin width={30} />
+                      </div>
+                    );
+                  }
+
+                  if (loading) {
+                    return <TailSpin width={30} />;
+                  }
+
+                  return auctionEnded ? "Settle auction" : "Place bid";
+                })()}
+              </button>
+            </div>
+            {bidError ? (
+              <div className="bid-error-wrapper">
+                <div className="bid-error">
+                  <p>{bidError}</p>
                 </div>
-              );
-            }
-
-            if (loading) {
-              return <TailSpin width={30} />;
-            }
-
-            return auctionEnded && !inactiveAuction
-              ? "Settle auction"
-              : "Place bid";
-          })()}
-        </button>
-      </div>
-      {bidError ? (
-        <div className="bid-error">
-          <p>{bidError}</p>
-        </div>
-      ) : null}
+              </div>
+            ) : null}
+          </>
+        );
+      })()}
       <style jsx>{`
+        .connect-btn {
+          width: 100% !important;
+          padding: 0.6rem 1rem;
+          border-radius: 6px !important;
+          height: 54px;
+          font-size: 1.16rem;
+          opacity: 0.85;
+        }
+        .bid-error-wrapper {
+          display: flex;
+        }
         .bid-error {
-          background: red;
+          background: rgba(255, 15, 29, 0.7);
           border-radius: 6px;
           padding: 0.25rem 0.66rem;
+          width: 100%;
+          margin-top: 0.6rem;
         }
         .bid-error p {
-          font-size: 1rem;
+          font-size: 1.16rem;
+          line-height: 32px;
           font-weight: 500;
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-            Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans",
-            "Helvetica Neue", sans-serif !important;
           margin: 0;
         }
         .bid-placeholder {
           position: absolute;
           opacity: 0.5;
-          font-size: 1.16rem;
           top: 30%;
           left: 5%;
           z-index: 1;
@@ -394,6 +424,10 @@ const AuctionInput = ({
         .bid-input:focus {
           border: 1px solid #12004c !important;
           opacity: 1;
+        }
+
+        .connect-btn {
+          margin-left: 0px !important;
         }
 
         @media (max-width: 568px) {

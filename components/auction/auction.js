@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useKeyPress } from "../../hooks/useKeyPress";
 import { useRouter } from "next/router";
-import { useContractFunction } from "@usedapp/core";
 import { ethers } from "ethers";
 import AuctionTimer from "./auctionTimer";
 import useAuctionHouseSubscriber from "../../hooks/useAuctionHouseSubscriber";
@@ -68,7 +67,7 @@ const setBg = (bg) => {
 };
 
 let npid, ppid;
-const Auction = ({ web3React }) => {
+const Auction = ({ web3React, walletConnectClick }) => {
   const router = useRouter();
   const query = useQuery(router);
 
@@ -178,7 +177,11 @@ const Auction = ({ web3React }) => {
                   ) : null}
                   <img
                     alt={wizard.dataURI?.description}
-                    className="wizard-img"
+                    className={
+                      wizard.endTime < Math.floor(new Date() / 1000)
+                        ? "wizard-img sold"
+                        : "wizard-img"
+                    }
                     src={wizard.dataURI?.image}
                   />
                 </div>
@@ -222,6 +225,7 @@ const Auction = ({ web3React }) => {
                       bidError={bidError}
                       auctionHouse={auctionHouse}
                       web3React={web3React}
+                      walletConnectClick={walletConnectClick}
                       wizard={wizard}
                       minBidEth={minBidEth(
                         computeMinimumNextBid(
@@ -276,7 +280,6 @@ const Auction = ({ web3React }) => {
           height: auto;
           vertical-align: middle;
         }
-
         .m-sbs h2 {
           margin-top: -10px;
         }

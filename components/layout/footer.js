@@ -1,11 +1,12 @@
 import React from "react";
+import Feature from "../brand/feature";
 import TreasuryBalance from "../treasury/balance";
 
 const Footer = () => {
   return (
     <>
-      <footer className="p hidden-mobile">
-        <ul>
+      <footer>
+        <ul className="hidden-mobile">
           <li className="p">
             <a href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20">
               <TreasuryBalance />
@@ -18,7 +19,7 @@ const Footer = () => {
             <a href="https://twitter.com/wizardsdao">Twitter</a>
           </li>
           <li className="p">
-            <a href="https://opensea.io/collection/wizardsdao">Opensea</a>
+            <a href="https://opensea.io/collection/wizardsdao">OpenSea</a>
           </li>
           <li className="p">
             <a href="https://etherscan.io/address/0xC23b12EBA3af92dc3Ec94744c0c260caD0EeD0e5">
@@ -26,31 +27,43 @@ const Footer = () => {
             </a>
           </li>
         </ul>
+        <div className="hidden-desktop mob">
+          <ul>
+            <li className="p">
+              <a href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20">
+                <TreasuryBalance />
+              </a>
+            </li>
+            <li className="p">
+              <a href="https://snapshot.org/#/wizdao.eth">The DAO</a>
+            </li>
+            <li className="p">
+              <a href="https://twitter.com/wizardsdao">Twitter</a>
+            </li>
+            <li className="p">
+              <a href="https://opensea.io/collection/wizardsdao">OpenSea</a>
+            </li>
+            <li className="p">
+              <a href="https://etherscan.io/address/0xC23b12EBA3af92dc3Ec94744c0c260caD0EeD0e5">
+                Etherscan
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="f">
+          <Feature />
+        </div>
       </footer>
-      <footer className="hidden-desktop mob">
-        <ul>
-          <li className="p">
-            <a href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20">
-              <TreasuryBalance />
-            </a>
-          </li>
-          <li className="p">
-            <a href="https://snapshot.org/#/wizdao.eth">The DAO</a>
-          </li>
-          <li className="p">
-            <a href="https://twitter.com/wizardsdao">Twitter</a>
-          </li>
-          <li className="p">
-            <a href="https://opensea.io/collection/wizardsdao">Opensea</a>
-          </li>
-          <li className="p">
-            <a href="https://etherscan.io/address/0xC23b12EBA3af92dc3Ec94744c0c260caD0EeD0e5">
-              Etherscan
-            </a>
-          </li>
-        </ul>
-      </footer>
+
       <style jsx>{`
+        .f {
+          width: 100%;
+          display: block;
+          margin: 1rem 0 2rem 0 !important;
+        }
+        .mob {
+          width: 100%;
+        }
         .mob ul {
           display: block;
           align-items: center;
@@ -96,9 +109,6 @@ const Footer = () => {
         }
         footer {
           text-align: center;
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
           color: #fff;
           height: auto;
           position: relative;

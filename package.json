@@ -28,6 +28,7 @@
     "react-icons": "^4.3.1",
     "react-singleton-hook": "^3.2.3",
     "sass": "^1.45.1",
-    "svg-loaders-react": "^2.2.1"
+    "svg-loaders-react": "^2.2.1",
+    "zustand": "^3.7.1"
   }
 }

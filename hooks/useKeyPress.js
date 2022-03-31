@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-
+import { useState, useEffect } from "react";
 export const useKeyPress = (targetKey, onKeyDown, onKeyUp) => {
   const [keyPressed, setKeyPressed] = useState(false);
 

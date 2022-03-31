@@ -2,16 +2,14 @@ import { useReducer, useEffect, useState } from "react";
 import { getContractsForChainOrThrow } from "../sdk/dist/contract";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { ethers } from "@usedapp/core/node_modules/ethers";
+import useStore from "./store";
 
 // avg blocks per day are about 6_500, give some space for extended auctions
 const BLOCKS_PER_DAY = 8_000;
 const BLOCKS_PER_HOUR = 240;
 const AUCTION_COUNT = 3;
 
-// record whether we've made our first call to api provider
-let polled = false;
-
-const getBlocks = () => {
+const getBlocks = (polled) => {
   if (polled) return (BLOCKS_PER_HOUR / 60) * 10; // 10 minutes
 
   return BLOCKS_PER_DAY;
@@ -145,6 +143,8 @@ const extEventsReducer = (state, action) => {
 };
 
 export default function useAuctionHouseSubscriber() {
+  const polled = useStore((state) => state.polled);
+
   const [timerLength, setTimerLength] = useState(10000); // defalt to 10s
   const [paused, setPaused] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -263,7 +263,7 @@ export default function useAuctionHouseSubscriber() {
       if (cancelRequest) return;
       const bids = await auctionHouseContract.queryFilter(
         bidFilter,
-        0 - getBlocks()
+        0 - getBlocks(polled)
       );
 
       for (let i = 0; i < bids.length; i++) {
@@ -287,7 +287,7 @@ export default function useAuctionHouseSubscriber() {
       if (cancelRequest) return;
       const cae = await auctionHouseContract.queryFilter(
         createdFilter,
-        0 - getBlocks()
+        0 - getBlocks(polled)
       );
 
       const latest = cae.slice(-AUCTION_COUNT);
@@ -313,7 +313,7 @@ export default function useAuctionHouseSubscriber() {
       if (cancelRequest) return;
       const cae = await auctionHouseContract.queryFilter(
         extendedFilter,
-        0 - getBlocks()
+        0 - getBlocks(polled)
       );
 
       const latest = cae.slice(-AUCTION_COUNT);
@@ -331,7 +331,7 @@ export default function useAuctionHouseSubscriber() {
       if (cancelRequest) return;
       const cae = await auctionHouseContract.queryFilter(
         settledFilter,
-        0 - getBlocks()
+        0 - getBlocks(polled)
       );
 
       const latest = cae.slice(-AUCTION_COUNT);
@@ -381,8 +381,8 @@ export default function useAuctionHouseSubscriber() {
       getSettledEvents(cancelRequest),
       fn(cancelRequest),
     ]).then(() => {
-      polled = true;
       setLoading(false);
+      useStore.setState({ polled: true });
     });
   };
 

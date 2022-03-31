@@ -1,11 +1,18 @@
 import { useRef } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Logo from "../brand/logo";
 import { Twitter, Instagram, Discord, OpenSea } from "../brand/thirdparty";
 import TreasuryBalance from "../treasury/balance";
 
 const Header = (props) => {
+  const router = useRouter();
   const mobileMenu = useRef(null);
+
+  // get active path to render current page indicator
+  let activePath = router.asPath.split("/");
+  activePath.shift();
+  activePath = activePath[0].toLowerCase();
 
   const mobileToggle = (e) => {
     e.preventDefault();
@@ -22,7 +29,7 @@ const Header = (props) => {
 
   return (
     <>
-      <header className="top">
+      <header className={props.white ? "top white" : "top"}>
         <div className="start">
           <div className="logo">
             <Logo href="/" />
@@ -30,49 +37,57 @@ const Header = (props) => {
         </div>
         <nav className="end">
           <ul
-            className="small"
+            className="small hidden-mobile"
             style={{ display: "flex", alignItems: "center" }}
           >
-            <li className="hidden-mobile">
+            <li>
               <a
                 className="nav-link balance"
                 href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20"
               >
-                <TreasuryBalance pill />
+                <TreasuryBalance pill white={props.white} />
               </a>
             </li>
-            <li className="hidden-mobile">
-              <Link href="/vision">
-                <a className="nav-link">Vision</a>
+            <li>
+              <Link href="/">
+                <a
+                  className={
+                    activePath == "" || activePath == "auction"
+                      ? "active nav-link"
+                      : "nav-link"
+                  }
+                >
+                  Auction
+                </a>
               </Link>
             </li>
-            <li className="hidden-mobile">
+            <li>
+              <Link href="/vision">
+                <a
+                  className={
+                    activePath == "vision"
+                      ? "active white nav-link"
+                      : "nav-link"
+                  }
+                >
+                  Vision
+                </a>
+              </Link>
+            </li>
+            <li>
               <a className="nav-link" href="https://discord.gg/wizardsdao">
                 Discord
               </a>
             </li>
-            <li className="hidden-mobile">
+            <li>
               <a className="nav-link" href="https://snapshot.org/#/wizdao.eth">
                 Proposals
               </a>
             </li>
-            <li className="hidden-mobile">
-              <a
-                className="nav-link"
-                href="https://twitter.com/WizardsDAOBot/status/1483146932847476738"
-              >
-                Previous Auctions
-              </a>
-            </li>
-            <li className="ham hidden-desktop">
-              <button type="button" onClick={mobileToggle}>
-                X
-              </button>
-            </li>
             {(() => {
               if (!props.web3Connected) {
                 return (
-                  <li className="hidden-mobile">
+                  <li>
                     <button
                       type="button"
                       className="nav-link btn wc"
@@ -85,7 +100,7 @@ const Header = (props) => {
               }
 
               return (
-                <li className="hidden-mobile">
+                <li>
                   <button
                     type="button"
                     className="nav-link btn wc"
@@ -97,16 +112,36 @@ const Header = (props) => {
               );
             })()}
           </ul>
+          <button
+            className="ham hidden-desktop"
+            type="button"
+            onClick={mobileToggle}
+          >
+            <div id="pencet">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </button>
         </nav>
         <div className="mobile-menu hidden" ref={mobileMenu}>
           <div className="mm-header">
             <Logo href="#" />
-            <button type="button" onClick={mobileToggle}>
-              x
+            <button className="ham" type="button" onClick={mobileToggle}>
+              <div id="pencet" className="Diam">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
             </button>
           </div>
           <nav className="mm">
-            <ul>
+            <ul onClick={mobileToggle}>
+              <li>
+                <Link href="/vision">
+                  <a className="nav-link">Vision</a>
+                </Link>
+              </li>
               <li>
                 <a
                   className="nav-link"
@@ -142,7 +177,9 @@ const Header = (props) => {
                   href="https://twitter.com/WizardsDAO"
                 >
                   <div>Twitter</div>
-                  <Twitter style={{ height: 20, alignSelf: "center" }} />
+                  <Twitter
+                    style={{ height: 20, alignSelf: "center", fill: "#fff" }}
+                  />
                 </a>
               </li>
               <li>
@@ -151,7 +188,9 @@ const Header = (props) => {
                   href="http://discord.gg/wizardsdao"
                 >
                   <div>Discord</div>
-                  <Discord style={{ height: 20, alignSelf: "center" }} />
+                  <Discord
+                    style={{ height: 20, alignSelf: "center", fill: "#fff" }}
+                  />
                 </a>
               </li>
               <li>
@@ -160,7 +199,9 @@ const Header = (props) => {
                   href="https://www.instagram.com/wizardsdao/"
                 >
                   <div>Instagram</div>
-                  <Instagram style={{ height: 20, alignSelf: "center" }} />
+                  <Instagram
+                    style={{ height: 20, alignSelf: "center", fill: "#fff" }}
+                  />
                 </a>
               </li>
               <li>
@@ -169,7 +210,9 @@ const Header = (props) => {
                   href="https://opensea.io/collection/wizardsdao"
                 >
                   <div>OpenSea</div>
-                  <OpenSea style={{ height: 20, alignSelf: "center" }} />
+                  <OpenSea
+                    style={{ height: 20, alignSelf: "center", fill: "#fff" }}
+                  />
                 </a>
               </li>
             </ul>
@@ -182,6 +225,7 @@ const Header = (props) => {
                     type="button"
                     className="nav-link btn wc action"
                     onClick={props.walletConnectClick}
+                    style={{ color: "#fff" }}
                   >
                     Connect wallet
                   </button>
@@ -193,6 +237,7 @@ const Header = (props) => {
                   type="button"
                   className="nav-link btn wc action"
                   onClick={props.walletDisconnectClick}
+                  style={{ color: "#fff" }}
                 >
                   Disconnect wallet
                 </button>
@@ -272,7 +317,9 @@ const Header = (props) => {
         }
         .mm .nav-link {
           font-size: 1.16rem;
+          color: #fff !important;
         }
+
         .mm .nav-link:focus {
           border: none;
           outline: none;
@@ -308,6 +355,8 @@ const Header = (props) => {
         .mm-header {
           display: flex;
           justify-content: space-between;
+          align-items: center;
+          height: 60px;
           padding: 10px 15px;
         }
         .mobile-menu {
@@ -335,14 +384,69 @@ const Header = (props) => {
           justify-content: center;
           align-items: center;
           position: absolute;
-          bottom: 2rem;
+          bottom: 1.25rem;
+          padding: 0 15px;
           width: 100%;
-        }
-        .action {
-          box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.2);
         }
         .nav-link.balance:hover {
           border-bottom: none;
+        }
+
+        .active {
+          border-bottom: 2px solid #12004c;
+        }
+        .active.white {
+          border-color: #fff;
+        }
+
+        .white .nav-link {
+          color: #fff;
+        }
+
+        .action {
+          box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.2);
+          background: rgba(107, 0, 250, 1) !important;
+          border-color: rgba(143, 56, 255, 0.4);
+          width: 100%;
+          padding: 1rem 1rem;
+          font-size: 1.16rem;
+        }
+
+        #pencet span {
+          background-color: ghostwhite;
+          width: 2em;
+          height: 0.2em;
+          margin: 0.4em 0;
+          display: block;
+          transition: all 0.4s ease;
+          transform-origin: 0 0;
+        }
+
+        .Diam {
+          position: relative;
+          transform: scale(0.9);
+          right: -3px;
+        }
+
+        .Diam span:nth-child(1) {
+          transform: rotate(45deg) translate(1px, -1px);
+        }
+
+        .Diam span:nth-child(2) {
+          transform: scaleX(0);
+        }
+
+        .Diam span:nth-child(3) {
+          transform: rotate(-45deg) translate(1px, 0);
+          top: 4px;
+          right: 1px;
+          position: relative;
+        }
+
+        .ham {
+          background: none;
+          outline: none;
+          border: none;
         }
       `}</style>
     </>

@@ -1,17 +1,17 @@
-const Section = ({ children, img, reverse }) => {
+const Section = (props) => {
   return (
-    <div className={"container"}>
+    <div className="container">
       <div className="row m">
         {(() => {
-          if (reverse) {
+          if (props.reverse) {
             return (
               <>
                 <div className="col-md-6">
-                  <div className="col-sm-12">{children}</div>
+                  <div className="col-sm-12">{props.children}</div>
                 </div>
                 <div className="col-md-6">
                   <div className="col-sm-12">
-                    <img src={img} />
+                    <img src={props.img} />
                   </div>
                 </div>
               </>
@@ -22,11 +22,11 @@ const Section = ({ children, img, reverse }) => {
             <>
               <div className="col-md-6">
                 <div className="col-sm-12">
-                  <img src={img} />
+                  <img src={props.img} />
                 </div>
               </div>
               <div className="col-md-6">
-                <div className="col-sm-12">{children}</div>
+                <div className="col-sm-12">{props.children}</div>
               </div>
             </>
           );

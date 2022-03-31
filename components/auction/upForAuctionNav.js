@@ -60,6 +60,7 @@ const UpForAuctionNav = ({ query, wizards, nextPage, previousPage }) => {
           gap: 0.66rem;
           margin: 2.4rem auto 0 auto;
         }
+
         .action {
           border: none;
           outline: none;
@@ -68,9 +69,11 @@ const UpForAuctionNav = ({ query, wizards, nextPage, previousPage }) => {
           padding: 0 3px;
           transition: all 0.2s ease;
         }
+
         .action:hover {
           opacity: 1;
         }
+
         .thumb {
           display: flex;
           justify-content: center;
@@ -102,6 +105,44 @@ const UpForAuctionNav = ({ query, wizards, nextPage, previousPage }) => {
         .mid {
           display: flex;
           justify-content: center;
+        }
+
+        .done {
+          filter: grayscale(1);
+        }
+
+        .pulse {
+          border-radius: 6px;
+          animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+          }
+          70% {
+            box-shadow: 0 0 0 7px rgba(255, 82, 82, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+          }
+        }
+
+        .pulse-urgent {
+          border-radius: 6px;
+          animation: pulse-urgent 300ms infinite;
+        }
+
+        @keyframes pulse-urgent {
+          0% {
+            box-shadow: 0 0 0 0 rgba(255, 82, 82, 1);
+          }
+          70% {
+            box-shadow: 0 0 0 7px rgba(255, 82, 82, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+          }
         }
       `}</style>
     </div>

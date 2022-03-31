@@ -1,4 +1,3 @@
-// import App from 'next/app'
 import "../css/bootstrap.scss";
 
 function MyApp({ Component, pageProps }) {
