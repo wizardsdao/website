@@ -84,6 +84,8 @@ const Auction = ({ web3React, walletConnectClick }) => {
     poll,
     paused,
     loading,
+    notActive,
+    reachedCap,
   ] = useAuctionHouseSubscriber();
 
   const [pageState, setPageState] = useState(state);
@@ -109,6 +111,14 @@ const Auction = ({ web3React, walletConnectClick }) => {
       const ps = await onUpdate(events, wizardToken, query, { ...pageState });
       npid = ps.nextPageId;
       ppid = ps.previousPageId;
+
+      // no active auction
+      if (notActive) {
+        ps.wizards = ps.wizards.map((w) => {
+          w.dataURI.image = "/static/img/drooler.svg";
+          return w;
+        });
+      }
 
       setBg(ps.bg);
       setPageState(ps);
@@ -161,6 +171,9 @@ const Auction = ({ web3React, walletConnectClick }) => {
         }
       })()}
       <div className="auction-wrapper">
+        <div className="more-ind hidden-mobile">
+          <span className="mono-text">WTF is this? ⬇</span>
+        </div>
         <div className="container-xl">
           <UpForAuctionNav
             query={query}
@@ -234,6 +247,7 @@ const Auction = ({ web3React, walletConnectClick }) => {
                         )
                       )}
                       setBidError={setBidError}
+                      notActive={notActive}
                     />
                   </div>
                   <BidHistory wizard={wizard} web3React={web3React} />
@@ -290,6 +304,26 @@ const Auction = ({ web3React, walletConnectClick }) => {
 
         .pl {
           padding-left: 2.5rem;
+        }
+
+        .more-ind {
+          position: absolute;
+          bottom: 10px;
+          right: 75%;
+          transform: translateX(-40%);
+          background: rgba(107, 0, 250, 1);
+          box-shadow: 0 0 20px 1px rgba(18, 0, 76, 0.4);
+          border: 2px solid rgba(143, 56, 255, 0.4);
+          padding: 10px 20px;
+          border-radius: 6px;
+          color: #fff;
+          z-index: 999;
+          font-family: "VCR OSD Mono", monospace;
+        }
+
+        .auction-wrapper {
+          position: relative;
+          background: #c5a3e2;
         }
 
         @media (max-width: 568px) {

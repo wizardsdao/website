@@ -23,9 +23,8 @@ const Logo = ({ style, href }) => (
         align-items: center;
       }
       .s {
-        height: 18px;
+        height: 17px;
         image-rendering: pixelated;
-        image-rendering: -moz-crisp-edges;
       }
     `}</style>
   </>

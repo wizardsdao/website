@@ -15,7 +15,6 @@ const Header = (props) => {
   activePath = activePath[0].toLowerCase();
 
   const mobileToggle = (e) => {
-    e.preventDefault();
     const container = document.querySelector("html");
     if (container.classList.contains("no-scroll")) {
       container.classList.remove("no-scroll");
@@ -44,6 +43,7 @@ const Header = (props) => {
               <a
                 className="nav-link balance"
                 href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20"
+                target="_blank"
               >
                 <TreasuryBalance pill white={props.white} />
               </a>
@@ -75,13 +75,21 @@ const Header = (props) => {
               </Link>
             </li>
             <li>
-              <a className="nav-link" href="https://discord.gg/wizardsdao">
+              <a
+                className="nav-link"
+                href="https://discord.gg/wizardsdao"
+                target="_blank"
+              >
                 Discord
               </a>
             </li>
             <li>
-              <a className="nav-link" href="https://snapshot.org/#/wizdao.eth">
-                Proposals
+              <a
+                className="nav-link"
+                href="https://wizardsdao.notion.site/Wiz-Hub-7f264436ed0245809111d60450adda97"
+                target="_blank"
+              >
+                Hub
               </a>
             </li>
             {(() => {
@@ -146,6 +154,7 @@ const Header = (props) => {
                 <a
                   className="nav-link"
                   href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20"
+                  target="_blank"
                 >
                   <TreasuryBalance />
                 </a>
@@ -153,20 +162,26 @@ const Header = (props) => {
               <li>
                 <a
                   className="nav-link"
-                  href="https://snapshot.org/#/wizdao.eth"
+                  href="https://wizardsdao.notion.site/Wiz-Hub-7f264436ed0245809111d60450adda97"
+                  target="_blank"
                 >
-                  Proposals
+                  Hub
                 </a>
               </li>
               <li>
-                <a className="nav-link" href="https://github.com/wizardsdao">
+                <a
+                  className="nav-link"
+                  href="https://github.com/wizardsdao"
+                  target="_blank"
+                >
                   GitHub
                 </a>
               </li>
               <li>
                 <a
                   className="nav-link"
-                  href="https://etherscan.io/address/0xC23b12EBA3af92dc3Ec94744c0c260caD0EeD0e5"
+                  href="https://etherscan.io/address/0x418CbB82f7472B321c2C5Ccf76b8d9b6dF47Daba"
+                  target="_blank"
                 >
                   Etherscan
                 </a>
@@ -175,6 +190,7 @@ const Header = (props) => {
                 <a
                   className="nav-link flex"
                   href="https://twitter.com/WizardsDAO"
+                  target="_blank"
                 >
                   <div>Twitter</div>
                   <Twitter
@@ -186,6 +202,7 @@ const Header = (props) => {
                 <a
                   className="nav-link flex"
                   href="http://discord.gg/wizardsdao"
+                  target="_blank"
                 >
                   <div>Discord</div>
                   <Discord
@@ -196,18 +213,8 @@ const Header = (props) => {
               <li>
                 <a
                   className="nav-link flex"
-                  href="https://www.instagram.com/wizardsdao/"
-                >
-                  <div>Instagram</div>
-                  <Instagram
-                    style={{ height: 20, alignSelf: "center", fill: "#fff" }}
-                  />
-                </a>
-              </li>
-              <li>
-                <a
-                  className="nav-link flex"
                   href="https://opensea.io/collection/wizardsdao"
+                  target="_blank"
                 >
                   <div>OpenSea</div>
                   <OpenSea
@@ -277,6 +284,10 @@ const Header = (props) => {
           align-items: center;
           gap: 1rem;
           height: 62px;
+          background: #c5a3e2;
+        }
+        header.white {
+          background: #12004c !important;
         }
         .start {
           width: auto;
@@ -447,6 +458,11 @@ const Header = (props) => {
           background: none;
           outline: none;
           border: none;
+        }
+
+        .white .wc {
+          background: #fff;
+          color: #000 !important;
         }
       `}</style>
     </>

@@ -32,7 +32,11 @@ const bidRow = ({ e, account, loading }) => {
           <span>{loading ? null : state.data || shortAddress}</span>
           {(() => {
             if (!loading && yourBid) {
-              return <div className="pill">Your bid</div>;
+              return (
+                <div className="pill">
+                  <span>Your bid</span>
+                </div>
+              );
             }
           })()}
           {(() => {
@@ -98,10 +102,14 @@ const bidRow = ({ e, account, loading }) => {
         }
         .pill {
           background: #f9b42b;
-          padding: 0px 10px;
+          padding: 5px 10px;
           border-radius: 1rem;
           margin-left: 15px;
           font-size: 11px;
+        }
+        .pill span {
+          position: relative;
+          top: 1px;
         }
         .bi span {
           position: relative;
@@ -110,6 +118,9 @@ const bidRow = ({ e, account, loading }) => {
         @media (max-width: 568px) {
           .br {
             background: rgba(24, 10, 87);
+          }
+          .pill {
+            color: #000;
           }
         }
       `}</style>

@@ -8,21 +8,28 @@ const Footer = () => {
       <footer>
         <ul className="hidden-mobile">
           <li className="p">
-            <a href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20">
+            <a
+              href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20"
+              target="_blank"
+            >
               <TreasuryBalance />
             </a>
           </li>
           <li className="p">
-            <a href="https://snapshot.org/#/wizdao.eth">Proposals</a>
+            <a href="https://snapshot.org/#/wizdao.eth" target="_blank">
+              Proposals
+            </a>
           </li>
           <li className="p">
-            <a href="https://twitter.com/wizardsdao">Twitter</a>
+            <a href="https://opensea.io/collection/wizardsdao" target="_blank">
+              OpenSea
+            </a>
           </li>
           <li className="p">
-            <a href="https://opensea.io/collection/wizardsdao">OpenSea</a>
-          </li>
-          <li className="p">
-            <a href="https://etherscan.io/address/0xC23b12EBA3af92dc3Ec94744c0c260caD0EeD0e5">
+            <a
+              href="https://etherscan.io/address/0x418CbB82f7472B321c2C5Ccf76b8d9b6dF47Daba"
+              target="_blank"
+            >
               Etherscan
             </a>
           </li>
@@ -30,21 +37,31 @@ const Footer = () => {
         <div className="hidden-desktop mob">
           <ul>
             <li className="p">
-              <a href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20">
+              <a
+                href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20"
+                target="_blank"
+              >
                 <TreasuryBalance />
               </a>
             </li>
             <li className="p">
-              <a href="https://snapshot.org/#/wizdao.eth">The DAO</a>
+              <a href="https://snapshot.org/#/wizdao.eth" target="_blank">
+                The DAO
+              </a>
             </li>
             <li className="p">
-              <a href="https://twitter.com/wizardsdao">Twitter</a>
+              <a
+                href="https://opensea.io/collection/wizardsdao"
+                target="_blank"
+              >
+                OpenSea
+              </a>
             </li>
             <li className="p">
-              <a href="https://opensea.io/collection/wizardsdao">OpenSea</a>
-            </li>
-            <li className="p">
-              <a href="https://etherscan.io/address/0xC23b12EBA3af92dc3Ec94744c0c260caD0EeD0e5">
+              <a
+                href="https://etherscan.io/address/0x418CbB82f7472B321c2C5Ccf76b8d9b6dF47Daba"
+                target="_blank"
+              >
                 Etherscan
               </a>
             </li>

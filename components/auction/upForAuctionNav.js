@@ -6,7 +6,9 @@ const UpForAuctionNav = ({ query, wizards, nextPage, previousPage }) => {
     <div className="mid">
       <div className="nav">
         <Link href={`/auction/${previousPage}`}>
-          <a className="action">◀</a>
+          <a className="action">
+            <img src="/static/img/left.svg" width="18" />
+          </a>
         </Link>
         <div className="up">
           {wizards.map((w, idx) => {
@@ -50,7 +52,9 @@ const UpForAuctionNav = ({ query, wizards, nextPage, previousPage }) => {
           })}
         </div>
         <Link href={`/auction/${nextPage}`}>
-          <a className="action">▶</a>
+          <a className="action">
+            <img src="/static/img/right.svg" width="18" />
+          </a>
         </Link>
       </div>
       <style jsx>{`

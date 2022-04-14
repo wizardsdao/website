@@ -16,6 +16,7 @@ const AuctionInput = ({
   wizards,
   poll,
   paused,
+  notActive,
 }) => {
   const placeholderRef = useRef(null);
   const bidInputRef = useRef(null);
@@ -296,6 +297,43 @@ const AuctionInput = ({
   return (
     <>
       {(() => {
+        if (web3React.active && notActive) {
+          return (
+            <div className="input-group">
+              <button
+                disabled={paused}
+                type="button"
+                className="btn connect-btn"
+                onClick={handleSettleClick}
+              >
+                {(() => {
+                  if (settling) {
+                    return (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          gap: "1.6rem",
+                          alignItems: "center",
+                        }}
+                      >
+                        <span>Settling</span>
+                        <TailSpin width={25} height={25} />
+                      </div>
+                    );
+                  }
+
+                  if (loading) {
+                    return <TailSpin width={25} height={25} />;
+                  }
+
+                  return paused ? "Auction paused" : "Start auction";
+                })()}
+              </button>
+            </div>
+          );
+        }
+
         if (!web3React.active) {
           return (
             <div className="input-group">
@@ -345,13 +383,13 @@ const AuctionInput = ({
                         }}
                       >
                         <span>Settling</span>
-                        <TailSpin width={30} />
+                        <TailSpin width={25} height={25} />
                       </div>
                     );
                   }
 
                   if (loading) {
-                    return <TailSpin width={30} />;
+                    return <TailSpin width={25} height={25} />;
                   }
 
                   return auctionEnded ? "Settle auction" : "Place bid";
@@ -407,7 +445,7 @@ const AuctionInput = ({
         .btn {
           width: auto;
           margin-left: 0.6rem !important;
-          background: #12004c;
+          background: #12004c !important;
           color: #fff !important;
           border: 1px solid #12004c;
           border-radius: 6px !important;
@@ -447,6 +485,13 @@ const AuctionInput = ({
           .bid-placeholder {
             opacity: 0.4;
             color: #000;
+          }
+
+          .connect-btn {
+            background: #7000ff !important;
+            border-color: #8f38ff !important;
+            color: #fff;
+            box-shadow: 0 0 20px 1px rgb(107 0 250);
           }
         }
       `}</style>

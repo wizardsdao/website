@@ -40,9 +40,11 @@ const ErrorPage = () => {
         }
         p {
           margin-bottom: 0;
+          color: #fff !important;
         }
         a {
           text-decoration: underline;
+          color: rgba(107, 0, 250, 1);
         }
         main {
           z-index: 999;
