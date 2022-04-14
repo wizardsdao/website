@@ -1,5 +1,8 @@
 import Layout from "../components/layout/home.js";
+import { useState } from "react";
+import Link from "next/link";
 import Web3 from "../components/web3";
+import { Twitter, Discord } from "../components/brand/thirdparty.js";
 
 const Vision = ({ web3React, onWalletConnectClick, onWalletDisconnect }) => {
   return (
@@ -17,22 +20,29 @@ const Vision = ({ web3React, onWalletConnectClick, onWalletDisconnect }) => {
             <h1>VISION</h1>
           </div>
           <p>
-            WizardsDAO is a collective of Professional Degenerates who want to
-            execute their crazy ideas. Lorem ipsum dolor sit amet consector ilit
-            demet.
+            Together we're building a community of professional degenerates.
           </p>
-          <p>Ut anim en da lorem ipsum dolor.</p>
-          <div className="sbs">
-            <p>Let's get freaky.</p>
-            <a href="#" className="section-btn btn purp">
-              Degens ↓
-            </a>
-          </div>
-          <img
-            className="bg-img"
-            src="/static/img/vision_tall_boy.svg"
-            height="400"
-          />
+          <p>
+            Our goals are to have fun, make homies, and proliferate the Wizards
+            brand.
+          </p>
+          <p>
+            We envision a collection of 2000 legendary, on-chain NFTs that unite
+            the WizardsDAO community and allow people to be themselves without
+            censorship.
+          </p>
+          <p>
+            <Link href="/">
+              <a
+                style={{
+                  margin: "2.6rem 0",
+                }}
+                className="btn purp"
+              >
+                Join us ↬
+              </a>
+            </Link>
+          </p>
         </div>
         <div className="row m rt">
           <div className="title">
@@ -40,10 +50,14 @@ const Vision = ({ web3React, onWalletConnectClick, onWalletDisconnect }) => {
             <h1>WIZARDS</h1>
           </div>
           <p>
-            WizardsDAO is a collective of Professional Degenerates who want to
-            execute their crazy ideas. Lorem ipsum dolor sit amet consector ilit
-            demet.
+            WizardsDAO is a decentralized community of builders, artists,
+            memers, and crypto enthusiasts. The Wizards create the future of the
+            Wizards brand. Everything is up to them.
           </p>
+          <img
+            src="/static/img/faded.png"
+            style={{ maxWidth: "830px", marginTop: "2rem" }}
+          />
         </div>
         <div className="row m rt">
           <div className="title">
@@ -51,40 +65,102 @@ const Vision = ({ web3React, onWalletConnectClick, onWalletDisconnect }) => {
             <h1>VIBES</h1>
           </div>
           <p>
-            WizardsDAO is a collective of Professional Degenerates who want to
-            execute their crazy ideas. Lorem ipsum dolor sit amet consector ilit
-            demet.
+            Want to learn about Wizards while getting lit? Join one of our
+            Twitter Spaces for a smoke sesh.
           </p>
+          <p>
+            Want to help push the WizardsDAO brand? Throw a Wizard hat on your
+            PFP, we're CC0!
+          </p>
+          <p>
+            Want to talk to the current Wizards? Hop on Discord and say what's
+            up!
+          </p>
+          <ul className="actions">
+            <li>
+              <Link href="/#how-it-works" target="_blank">
+                <a>How it works?</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="https://twitter.com/WizardsDAO" target="_blank">
+                <a>
+                  Twitter
+                  <Twitter
+                    style={{
+                      maxWidth: "30px",
+                      fill: "#fff",
+                      marginLeft: "1rem",
+                    }}
+                  />
+                </a>
+              </Link>
+            </li>
+            <li>
+              <Link href="http://discord.gg/wizardsdao" target="_blank">
+                <a>
+                  Discord{" "}
+                  <Discord
+                    style={{
+                      maxWidth: "30px",
+                      fill: "#fff",
+                      marginLeft: "1rem",
+                    }}
+                  />
+                </a>
+              </Link>
+            </li>
+          </ul>
         </div>
         <div className="row">
           <div className="col-md-6">
-            <div className="col-sm-12">
-              <p>
-                WizardsDAO is a collective of Professional Degenerates who want
-                to execute their crazy ideas. Lorem ipsum dolor sit amet
-                consector ilit demet.
-              </p>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="col-sm-12">
+            <div className="col-sm-12" style={{ position: "relative" }}>
               <img
-                src="/static/img/vision_tall_boy.svg"
+                className="fixed-img"
+                src="/static/img/barrel_man.svg"
                 style={{ float: "right" }}
-                height="400"
+                height="650"
               />
             </div>
           </div>
         </div>
       </div>
       <style jsx>{`
+        .actions {
+          margin: 0;
+          width: 100%;
+          max-width: 640px;
+          list-style: none;
+          margin-top: 1rem;
+        }
+        .actions li {
+          width: 100%;
+          background: rgb(44 29 122);
+          color: white;
+          border-radius: 6px;
+          margin: 1rem 0;
+          text-align: center;
+        }
+        .actions li a {
+          display: flex;
+          padding: 1.3rem 1rem;
+          align-items: center;
+          justify-content: center;
+        }
+        .small {
+          font-size: 1rem;
+        }
+        .mute {
+          opacity: 0.75;
+        }
+        .fixed-img {
+          position: fixed;
+          bottom: 30px;
+          left: 40%;
+          transform: translateX(90%);
+        }
         .container {
           max-width: 900px;
-        }
-        .row-f {
-          position: relative;
-          min-height: 400px;
-          display: block;
         }
         .bg-img {
           position: absolute;
@@ -104,7 +180,18 @@ const Vision = ({ web3React, onWalletConnectClick, onWalletDisconnect }) => {
         .purp {
           background: #7000ff !important;
           border-color: #8f38ff !important;
+          color: #fff;
+          box-shadow: 0 0 20px 1px rgb(107 0 250);
+          max-width: 300px;
         }
+
+        @media (max-width: 568px) {
+          .purp {
+            width: 100%;
+            max-width: 100%;
+          }
+        }
+
         .sbs {
           display: flex;
           margin: 2rem 0;
@@ -146,7 +233,13 @@ const Vision = ({ web3React, onWalletConnectClick, onWalletDisconnect }) => {
           margin-top: 0;
         }
         .rt {
-          margin-top: 12rem !important;
+          margin-top: 8rem !important;
+        }
+        .row-f {
+          position: relative;
+          min-height: 400px;
+          display: block;
+          margin-bottom: 0 !important;
         }
       `}</style>
     </Layout>

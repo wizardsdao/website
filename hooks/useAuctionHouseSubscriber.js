@@ -148,6 +148,7 @@ export default function useAuctionHouseSubscriber() {
   const [timerLength, setTimerLength] = useState(10000); // defalt to 10s
   const [paused, setPaused] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [notActive, setNotActive] = useState(false);
   const [reachedCap, setReachedCap] = useState(false);
   const [bidEvents, dispatchBidEvents] = useReducer(bidEventsReducer, []);
   const [createdEvents, dispatchCreatedEvents] = useReducer(
@@ -216,7 +217,7 @@ export default function useAuctionHouseSubscriber() {
 
     auctionCreated[aId] = wiz;
     for (let i = 1; i <= AUCTION_COUNT; i++) {
-      // prevent page renders by making sure we only dispatch when all 5 auctions are loaded
+      // prevent page renders by making sure we only dispatch when all auctions are loaded
       // this is really only important when a new auction or the first auction is started
       // so is more of an optimization but it really improves the experience
       // this also dedupes events
@@ -302,6 +303,12 @@ export default function useAuctionHouseSubscriber() {
           e.args.oneOfOne,
           e.args.isWhitelistDay
         );
+      }
+
+      if (!latest.length) {
+        setNotActive(true);
+      } else {
+        setNotActive(false);
       }
     } catch (ex) {
       console.errors("get created", ex);
@@ -417,5 +424,7 @@ export default function useAuctionHouseSubscriber() {
     poll,
     paused,
     loading,
+    notActive,
+    reachedCap,
   ];
 }

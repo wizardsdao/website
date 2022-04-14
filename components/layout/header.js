@@ -80,8 +80,11 @@ const Header = (props) => {
               </a>
             </li>
             <li>
-              <a className="nav-link" href="https://snapshot.org/#/wizdao.eth">
-                Proposals
+              <a
+                className="nav-link"
+                href="https://wizardsdao.notion.site/Wiz-Hub-7f264436ed0245809111d60450adda97"
+              >
+                Hub
               </a>
             </li>
             {(() => {
@@ -153,9 +156,9 @@ const Header = (props) => {
               <li>
                 <a
                   className="nav-link"
-                  href="https://snapshot.org/#/wizdao.eth"
+                  href="https://wizardsdao.notion.site/Wiz-Hub-7f264436ed0245809111d60450adda97"
                 >
-                  Proposals
+                  Hub
                 </a>
               </li>
               <li>
@@ -447,6 +450,11 @@ const Header = (props) => {
           background: none;
           outline: none;
           border: none;
+        }
+
+        .white .wc {
+          background: #fff;
+          color: #000 !important;
         }
       `}</style>
     </>

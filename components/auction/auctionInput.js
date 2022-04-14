@@ -16,6 +16,7 @@ const AuctionInput = ({
   wizards,
   poll,
   paused,
+  notActive,
 }) => {
   const placeholderRef = useRef(null);
   const bidInputRef = useRef(null);
@@ -296,6 +297,43 @@ const AuctionInput = ({
   return (
     <>
       {(() => {
+        if (web3React.active && notActive) {
+          return (
+            <div className="input-group">
+              <button
+                disabled={paused}
+                type="button"
+                className="btn connect-btn"
+                onClick={handleSettleClick}
+              >
+                {(() => {
+                  if (settling) {
+                    return (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          gap: "1.6rem",
+                          alignItems: "center",
+                        }}
+                      >
+                        <span>Settling</span>
+                        <TailSpin width={25} height={25} />
+                      </div>
+                    );
+                  }
+
+                  if (loading) {
+                    return <TailSpin width={25} height={25} />;
+                  }
+
+                  return paused ? "Auction paused" : "Start auction";
+                })()}
+              </button>
+            </div>
+          );
+        }
+
         if (!web3React.active) {
           return (
             <div className="input-group">
@@ -345,13 +383,13 @@ const AuctionInput = ({
                         }}
                       >
                         <span>Settling</span>
-                        <TailSpin width={30} />
+                        <TailSpin width={25} height={25} />
                       </div>
                     );
                   }
 
                   if (loading) {
-                    return <TailSpin width={30} />;
+                    return <TailSpin width={25} height={25} />;
                   }
 
                   return auctionEnded ? "Settle auction" : "Place bid";

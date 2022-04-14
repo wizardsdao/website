@@ -16,9 +16,6 @@ const Footer = () => {
             <a href="https://snapshot.org/#/wizdao.eth">Proposals</a>
           </li>
           <li className="p">
-            <a href="https://twitter.com/wizardsdao">Twitter</a>
-          </li>
-          <li className="p">
             <a href="https://opensea.io/collection/wizardsdao">OpenSea</a>
           </li>
           <li className="p">
@@ -36,9 +33,6 @@ const Footer = () => {
             </li>
             <li className="p">
               <a href="https://snapshot.org/#/wizdao.eth">The DAO</a>
-            </li>
-            <li className="p">
-              <a href="https://twitter.com/wizardsdao">Twitter</a>
             </li>
             <li className="p">
               <a href="https://opensea.io/collection/wizardsdao">OpenSea</a>

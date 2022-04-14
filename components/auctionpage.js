@@ -26,9 +26,9 @@ const AuctionPage = ({
         walletConnectClick={onWalletConnectClick}
       />
       <div className="container">
-        <div className="row m">
+        <div id="how-it-works" className="row m">
           <Feature text={"HOW IT WORKS"} />
-          <Section img={"https://via.placeholder.com/600x400"}>
+          <Section img={"/static/img/home_shards.svg"}>
             <h4 className="section-title">NEW WIZARDS EVERY 24 HOURS</h4>
             <h2>Auctions</h2>
             <p>
@@ -45,7 +45,7 @@ const AuctionPage = ({
               </a>
             </Link>
           </Section>
-          <Section img={"https://via.placeholder.com/600x400"}>
+          <Section img={"/static/img/home_barrels.svg"}>
             <h4 className="section-title">DECENTRALIZED GOVERNANCE</h4>
             <h2>The DAO</h2>
             <p>
@@ -57,11 +57,11 @@ const AuctionPage = ({
                 className="section-btn btn"
                 style={{ background: "#7000FF", borderColor: "#8f38ff" }}
               >
-                <span>Check out proposals</span>{" "}
+                <span>View recent proposals</span>{" "}
               </a>
             </Link>
           </Section>
-          <Section img={"https://via.placeholder.com/600x400"}>
+          <Section img={"/static/img/home_sussy.svg"}>
             <h4 className="section-title">NO RIGHTS RESERVED</h4>
             <h2>On-Chain Art</h2>
             <p>
@@ -77,7 +77,6 @@ const AuctionPage = ({
             </p>
             <Link href="https://opensea.io/collection/wizardsdao">
               <a className="section-btn btn">
-                <OpenSea style={{ width: "30px", fill: "#fff" }} />
                 <span>View on OpenSea</span>{" "}
               </a>
             </Link>
@@ -86,16 +85,20 @@ const AuctionPage = ({
             <div className="row m">
               <div className="col-sm-12">
                 <div className="col-sm-12 creators">
-                  <img src="https://via.placeholder.com/600x400" />
+                  <img
+                    src="/static/img/creators.png"
+                    style={{ transform: "scale(.9)" }}
+                  />
                   <div className="content">
                     <h2>Creator Rewards</h2>
                     <p>
                       10% of all auction proceeds are sent to the creators to
-                      cover startup costs and expenses.
+                      cover starting costs and expenses.
                     </p>
                     <p>
                       After 5 Wizards are auctioned, 1 Wizard is distributed to
-                      the creators' wallet for a total of 54 Wizards.
+                      the creators' wallet for a total of 54 Wizards. These
+                      don't intefere with the normal cadence of auctions.
                     </p>
                   </div>
                 </div>
