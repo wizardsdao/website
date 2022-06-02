@@ -115,7 +115,7 @@ const Auction = ({ web3React, walletConnectClick }) => {
       // no active auction
       if (notActive) {
         ps.wizards = ps.wizards.map((w) => {
-          w.dataURI.image = "/static/img/drooler.svg";
+          w.dataURI.image = "/static/img/new_drooler.svg";
           return w;
         });
       }
