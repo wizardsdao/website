@@ -23,7 +23,7 @@ const AuctionPage = ({ web3React, onWalletConnectClick, onWalletDisconnect }) =>
           <Section img={"/static/img/home_shards.svg"}>
             <h4 className="section-title">NEW WIZARDS EVERY 24 HOURS</h4>
             <h2>Auctions</h2>
-            <p>WizardsDAO auctions 3 wizard NFTs on-chain every 24 hours until a max supply of 2000 is reached.</p>
+            <p>WizardsDAO auctions wizard NFTs on-chain every 24 hours until a max supply of 2000 is reached.</p>
             <p>
               90% of all auction proceeds are stored in the WizardsDAO treasury, where they are governed by all members.
             </p>
