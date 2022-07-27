@@ -6,13 +6,9 @@ import Feature from "./brand/feature.js";
 import Section from "./landing/section";
 import { OpenSea } from "./brand/thirdparty.js";
 
-const AUCTION_COUNT = 3;
+const AUCTION_COUNT = 1;
 
-const AuctionPage = ({
-  web3React,
-  onWalletConnectClick,
-  onWalletDisconnect,
-}) => {
+const AuctionPage = ({ web3React, onWalletConnectClick, onWalletDisconnect }) => {
   return (
     <Layout
       title={`WizardsDAO - ${AUCTION_COUNT} Wizards every day. 2000 ever.`}
@@ -20,24 +16,16 @@ const AuctionPage = ({
       walletConnectClick={onWalletConnectClick}
       walletDisconnectClick={onWalletDisconnect}
     >
-      <Auction
-        restart={true}
-        web3React={web3React}
-        walletConnectClick={onWalletConnectClick}
-      />
+      <Auction restart={true} web3React={web3React} walletConnectClick={onWalletConnectClick} />
       <div className="container">
         <div id="how-it-works" className="row m">
           <Feature text={"HOW IT WORKS"} />
           <Section img={"/static/img/home_shards.svg"}>
             <h4 className="section-title">NEW WIZARDS EVERY 24 HOURS</h4>
             <h2>Auctions</h2>
+            <p>WizardsDAO auctions 3 wizard NFTs on-chain every 24 hours until a max supply of 2000 is reached.</p>
             <p>
-              WizardsDAO auctions 3 wizard NFTs on-chain every 24 hours until a
-              max supply of 2000 is reached.
-            </p>
-            <p>
-              90% of all auction proceeds are stored in the WizardsDAO treasury,
-              where they are governed by all members.
+              90% of all auction proceeds are stored in the WizardsDAO treasury, where they are governed by all members.
             </p>
             <Link href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20">
               <a className="section-btn btn" target="_blank">
@@ -48,16 +36,9 @@ const AuctionPage = ({
           <Section img={"/static/img/home_barrels.svg"}>
             <h4 className="section-title">DECENTRALIZED GOVERNANCE</h4>
             <h2>The DAO</h2>
-            <p>
-              1 WIZ = 1 VOTE. As a member of the WizardsDAO you can vote on how
-              The Treasury is managed.
-            </p>
+            <p>1 WIZ = 1 VOTE. As a member of the WizardsDAO you can vote on how The Treasury is managed.</p>
             <Link href="https://snapshot.org/#/wizdao.eth">
-              <a
-                className="section-btn btn"
-                style={{ background: "#7000FF", borderColor: "#8f38ff" }}
-                target="_blank"
-              >
+              <a className="section-btn btn" style={{ background: "#7000FF", borderColor: "#8f38ff" }} target="_blank">
                 <span>View recent proposals</span>{" "}
               </a>
             </Link>
@@ -65,16 +46,9 @@ const AuctionPage = ({
           <Section img={"/static/img/home_sussy.svg"}>
             <h4 className="section-title">NO RIGHTS RESERVED</h4>
             <h2>On-Chain Art</h2>
+            <p>Wizards are stored directly on Ethereum and other networks such as IPFS are not used.</p>
             <p>
-              Wizards are stored directly on Ethereum and other networks such as
-              IPFS are not used.
-            </p>
-            <p>
-              All artwork is{" "}
-              <a href="https://creativecommons.org/publicdomain/zero/1.0/">
-                CC0
-              </a>
-              .
+              All artwork is <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.
             </p>
             <Link href="https://opensea.io/collection/wizardsdao">
               <a className="section-btn btn" target="_blank">
@@ -86,20 +60,13 @@ const AuctionPage = ({
             <div className="row m">
               <div className="col-sm-12">
                 <div className="col-sm-12 creators">
-                  <img
-                    src="/static/img/creators.png"
-                    style={{ transform: "scale(.9)" }}
-                  />
+                  <img src="/static/img/creators.png" style={{ transform: "scale(.9)" }} />
                   <div className="content">
                     <h2>Creator Rewards</h2>
+                    <p>10% of all auction proceeds are sent to the creators to cover starting costs and expenses.</p>
                     <p>
-                      10% of all auction proceeds are sent to the creators to
-                      cover starting costs and expenses.
-                    </p>
-                    <p>
-                      After 5 Wizards are auctioned, 1 Wizard is distributed to
-                      the creators' wallet for a total of 54 Wizards. These
-                      don't intefere with the normal cadence of auctions.
+                      After 5 Wizards are auctioned, 1 Wizard is distributed to the creators' wallet for a total of 54
+                      Wizards. These don't intefere with the normal cadence of auctions.
                     </p>
                   </div>
                 </div>

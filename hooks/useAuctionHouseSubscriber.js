@@ -7,7 +7,7 @@ import useStore from "./store";
 // avg blocks per day are about 6_500, give some space for extended auctions
 const BLOCKS_PER_DAY = 8_000;
 const BLOCKS_PER_HOUR = 240;
-const AUCTION_COUNT = 3;
+const AUCTION_COUNT = 1;
 
 const getBlocks = (polled) => {
   if (polled) return (BLOCKS_PER_HOUR / 60) * 10; // 10 minutes
@@ -24,42 +24,19 @@ const wcCfg = {
 };
 
 const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID;
-const { auctionHouseContract, wizardTokenContract } =
-  getContractsForChainOrThrow(
-    CHAIN_ID,
-    new JsonRpcProvider({ url: wcCfg.rpc[CHAIN_ID] })
-  );
+const { auctionHouseContract, wizardTokenContract } = getContractsForChainOrThrow(
+  CHAIN_ID,
+  new JsonRpcProvider({ url: wcCfg.rpc[CHAIN_ID] })
+);
 
 // event log query filters.
-const bidFilter = auctionHouseContract.filters.AuctionBid(
-  null,
-  null,
-  null,
-  null,
-  null
-);
+const bidFilter = auctionHouseContract.filters.AuctionBid(null, null, null, null, null);
 
-const extendedFilter = auctionHouseContract.filters.AuctionExtended(
-  null,
-  null,
-  null
-);
+const extendedFilter = auctionHouseContract.filters.AuctionExtended(null, null, null);
 
-const createdFilter = auctionHouseContract.filters.AuctionCreated(
-  null,
-  null,
-  null,
-  null,
-  null,
-  null
-);
+const createdFilter = auctionHouseContract.filters.AuctionCreated(null, null, null, null, null, null);
 
-const settledFilter = auctionHouseContract.filters.AuctionSettled(
-  null,
-  null,
-  null,
-  null
-);
+const settledFilter = auctionHouseContract.filters.AuctionSettled(null, null, null, null);
 
 const bidEventsReducer = (state, action) => {
   const newEvents = [];
@@ -70,10 +47,7 @@ const bidEventsReducer = (state, action) => {
 
     for (let i = 0; i < state.length; i++) {
       const existingBid = state[i];
-      if (
-        existingBid.wizardId == newBid.wizardId &&
-        existingBid.value == newBid.value
-      ) {
+      if (existingBid.wizardId == newBid.wizardId && existingBid.value == newBid.value) {
         found = true;
         break;
       }
@@ -151,27 +125,11 @@ export default function useAuctionHouseSubscriber() {
   const [notActive, setNotActive] = useState(false);
   const [reachedCap, setReachedCap] = useState(false);
   const [bidEvents, dispatchBidEvents] = useReducer(bidEventsReducer, []);
-  const [createdEvents, dispatchCreatedEvents] = useReducer(
-    createdEventsReducer,
-    []
-  );
-  const [extendedEvents, dispatchExtendedEvents] = useReducer(
-    extEventsReducer,
-    []
-  );
-  const [settledEvents, dispatchSettledEvents] = useReducer(
-    settledEventsReducer,
-    []
-  );
+  const [createdEvents, dispatchCreatedEvents] = useReducer(createdEventsReducer, []);
+  const [extendedEvents, dispatchExtendedEvents] = useReducer(extEventsReducer, []);
+  const [settledEvents, dispatchSettledEvents] = useReducer(settledEventsReducer, []);
 
-  const processBidFilter = async (
-    wizardId,
-    aId,
-    sender,
-    value,
-    extended,
-    event
-  ) => {
+  const processBidFilter = async (wizardId, aId, sender, value, extended, event) => {
     const timestamp = (await event.getBlock()).timestamp;
     const transactionHash = event.transactionHash;
 
@@ -198,14 +156,7 @@ export default function useAuctionHouseSubscriber() {
     5: false,
   };
 
-  const processAuctionCreated = (
-    wizardId,
-    aId,
-    startTime,
-    endTime,
-    oneOfOne,
-    isWhitelistDay
-  ) => {
+  const processAuctionCreated = (wizardId, aId, startTime, endTime, oneOfOne, isWhitelistDay) => {
     const wiz = {
       wizardId: wizardId.toNumber(),
       aId: aId.toNumber(),
@@ -253,30 +204,18 @@ export default function useAuctionHouseSubscriber() {
 
   const processAuctionSettled = (wizardId, aId, winner, amount) => {
     dispatchSettledEvents({
-      events: [
-        { wizardId: wizardId.toNumber(), aId: aId.toNumber(), winner, amount },
-      ],
+      events: [{ wizardId: wizardId.toNumber(), aId: aId.toNumber(), winner, amount }],
     });
   };
 
   const getBids = async (cancelRequest) => {
     try {
       if (cancelRequest) return;
-      const bids = await auctionHouseContract.queryFilter(
-        bidFilter,
-        0 - getBlocks(polled)
-      );
+      const bids = await auctionHouseContract.queryFilter(bidFilter, 0 - getBlocks(polled));
 
       for (let i = 0; i < bids.length; i++) {
         const e = bids[i];
-        processBidFilter(
-          e.args.wizardId,
-          e.args.aId,
-          e.args.sender,
-          e.args.value,
-          e.args.extended,
-          e
-        );
+        processBidFilter(e.args.wizardId, e.args.aId, e.args.sender, e.args.value, e.args.extended, e);
       }
     } catch (ex) {
       console.errors("get bids", ex);
@@ -286,10 +225,7 @@ export default function useAuctionHouseSubscriber() {
   const getCreatedEvents = async (cancelRequest) => {
     try {
       if (cancelRequest) return;
-      const cae = await auctionHouseContract.queryFilter(
-        createdFilter,
-        0 - getBlocks(polled)
-      );
+      const cae = await auctionHouseContract.queryFilter(createdFilter, 0 - getBlocks(polled));
 
       const latest = cae.slice(-AUCTION_COUNT);
       for (let i = 0; i < latest.length; i++) {
@@ -318,10 +254,7 @@ export default function useAuctionHouseSubscriber() {
   const getExtendedEvents = async (cancelRequest) => {
     try {
       if (cancelRequest) return;
-      const cae = await auctionHouseContract.queryFilter(
-        extendedFilter,
-        0 - getBlocks(polled)
-      );
+      const cae = await auctionHouseContract.queryFilter(extendedFilter, 0 - getBlocks(polled));
 
       const latest = cae.slice(-AUCTION_COUNT);
       for (let i = 0; i < latest.length; i++) {
@@ -336,10 +269,7 @@ export default function useAuctionHouseSubscriber() {
   const getSettledEvents = async (cancelRequest) => {
     try {
       if (cancelRequest) return;
-      const cae = await auctionHouseContract.queryFilter(
-        settledFilter,
-        0 - getBlocks(polled)
-      );
+      const cae = await auctionHouseContract.queryFilter(settledFilter, 0 - getBlocks(polled));
 
       const latest = cae.slice(-AUCTION_COUNT);
 
@@ -352,12 +282,7 @@ export default function useAuctionHouseSubscriber() {
           .formatUnits(e.args.amount, "ether")
           .toString()}\n`;
 
-        processAuctionSettled(
-          e.args.wizardId,
-          e.args.aId,
-          e.args.winner,
-          e.args.amount
-        );
+        processAuctionSettled(e.args.wizardId, e.args.aId, e.args.winner, e.args.amount);
       }
       console.log(lastSettled);
     } catch (ex) {

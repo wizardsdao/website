@@ -11,7 +11,7 @@ import UpForAuctionNav from "./upForAuctionNav.js";
 import BidHistory from "./bidHistory.js";
 import { pageState as state, onUpdate } from "../../lib/auction/pageState";
 
-const AUCTION_COUNT = 3;
+const AUCTION_COUNT = 1;
 
 let minBidIncPercentage = new BigNumber(5);
 const computeMinimumNextBid = (currentBid, minBidIncPercentage) => {
@@ -19,9 +19,7 @@ const computeMinimumNextBid = (currentBid, minBidIncPercentage) => {
     return new BigNumber(0);
   }
 
-  return !minBidIncPercentage
-    ? new BigNumber.from(0)
-    : currentBid.times(minBidIncPercentage.div(100).plus(1));
+  return !minBidIncPercentage ? new BigNumber.from(0) : currentBid.times(minBidIncPercentage.div(100).plus(1));
 };
 
 const minBidEth = (minBid) => {
@@ -32,17 +30,14 @@ const minBidEth = (minBid) => {
     return "0.07";
   }
 
-  const eth = Number(
-    ethers.utils.formatEther(ethers.BigNumber.from(minBid.toFixed()))
-  );
+  const eth = Number(ethers.utils.formatEther(ethers.BigNumber.from(minBid.toFixed())));
 
   const roundedEth = Math.ceil(eth * 100) / 100;
   return roundedEth.toString();
 };
 
 function useQuery(router) {
-  const hasQueryParams =
-    /\[.+\]/.test(router.route) || /\?./.test(router.asPath);
+  const hasQueryParams = /\[.+\]/.test(router.route) || /\?./.test(router.asPath);
   const ready = !hasQueryParams || Object.keys(router.query).length > 0;
   if (!ready) return {};
   return router.query;
@@ -140,14 +135,7 @@ const Auction = ({ web3React, walletConnectClick }) => {
     loading,
   ]);
 
-  const {
-    wizards,
-    wizard,
-    imageLoading,
-    globalError,
-    nextPageId,
-    previousPageId,
-  } = pageState;
+  const { wizards, wizard, imageLoading, globalError, nextPageId, previousPageId } = pageState;
   if (!wizard.bids) wizard.bids = [];
 
   // handle key bindings
@@ -175,26 +163,15 @@ const Auction = ({ web3React, walletConnectClick }) => {
           <span className="mono-text">WTF is this? ⬇</span>
         </div>
         <div className="container-xl">
-          <UpForAuctionNav
-            query={query}
-            wizards={wizards}
-            nextPage={nextPageId}
-            previousPage={previousPageId}
-          />
+          <UpForAuctionNav query={query} wizards={wizards} nextPage={nextPageId} previousPage={previousPageId} />
           <div className="row">
             <div className="col-lg-6" style={{ display: "flex" }}>
               <div className="wizard-img-wrapper">
                 <div className="img-inner">
-                  {loading || imageLoading ? (
-                    <TailSpin className="lspinner" />
-                  ) : null}
+                  {loading || imageLoading ? <TailSpin className="lspinner" /> : null}
                   <img
                     alt={wizard.dataURI?.description}
-                    className={
-                      wizard.endTime < Math.floor(new Date() / 1000)
-                        ? "wizard-img sold"
-                        : "wizard-img"
-                    }
+                    className={wizard.endTime < Math.floor(new Date() / 1000) ? "wizard-img sold" : "wizard-img"}
                     src={wizard.dataURI?.image}
                   />
                 </div>
@@ -210,16 +187,13 @@ const Auction = ({ web3React, walletConnectClick }) => {
                     <div
                       className="col-md-4 m-sbs"
                       style={{
-                        borderRight:
-                          "1px solid rgba(121,128,156,.28627450980392155)",
+                        borderRight: "1px solid rgba(121,128,156,.28627450980392155)",
                       }}
                     >
                       <h4>Current bid</h4>
                       <h2>
                         <span style={{ fontFamily: "sans-serif" }}>{"Ξ "}</span>
-                        {ethers.utils.formatEther(
-                          wizard.lastBid || ethers.BigNumber.from("0")
-                        )}
+                        {ethers.utils.formatEther(wizard.lastBid || ethers.BigNumber.from("0"))}
                       </h2>
                     </div>
                     <div className="col-md-8 m-sbs pl">
@@ -241,10 +215,7 @@ const Auction = ({ web3React, walletConnectClick }) => {
                       walletConnectClick={walletConnectClick}
                       wizard={wizard}
                       minBidEth={minBidEth(
-                        computeMinimumNextBid(
-                          BigNumber(wizard.lastBid || new BigNumber(0)),
-                          minBidIncPercentage
-                        )
+                        computeMinimumNextBid(BigNumber(wizard.lastBid || new BigNumber(0)), minBidIncPercentage)
                       )}
                       setBidError={setBidError}
                       notActive={notActive}
@@ -334,8 +305,7 @@ const Auction = ({ web3React, walletConnectClick }) => {
           .activity {
             background: #12004c;
             color: #f0f0f0;
-            padding: calc(var(--bs-gutter-x) * 1) calc(var(--bs-gutter-x) * 1) 0
-              calc(var(--bs-gutter-x) * 1);
+            padding: calc(var(--bs-gutter-x) * 1) calc(var(--bs-gutter-x) * 1) 0 calc(var(--bs-gutter-x) * 1);
             min-height: auto;
             margin: 0;
           }
