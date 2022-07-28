@@ -163,7 +163,9 @@ const Auction = ({ web3React, walletConnectClick }) => {
           <span className="mono-text">WTF is this? ⬇</span>
         </div>
         <div className="container-xl">
-          <UpForAuctionNav query={query} wizards={wizards} nextPage={nextPageId} previousPage={previousPageId} />
+          {AUCTION_COUNT > 1 ? (
+            <UpForAuctionNav query={query} wizards={wizards} nextPage={nextPageId} previousPage={previousPageId} />
+          ) : null}
           <div className="row">
             <div className="col-lg-6" style={{ display: "flex" }}>
               <div className="wizard-img-wrapper">
