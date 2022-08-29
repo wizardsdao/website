@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import BigNumber from "bignumber.js";
-import { useEns } from "../../hooks/useEns";
+import { useNnsEns } from "../../hooks/useNnsEns";
 import Davatar from "@davatar/react";
 import { TailSpin } from "../loader";
 import { useEffect } from "react";
@@ -8,7 +8,7 @@ import { useProvider } from "../../hooks/useProvider";
 
 const bidRow = ({ e, account, loading }) => {
   const p = useProvider();
-  const state = useEns(e.sender);
+  const state = useNnsEns(e.sender);
 
   const shortAddress = [e.sender.substr(0, 4), e.sender.substr(38, 4)].join(
     "..."
