@@ -25,7 +25,8 @@ const AuctionPage = ({ web3React, onWalletConnectClick, onWalletDisconnect }) =>
             <h2>Auctions</h2>
             <p>WizardsDAO auctions wizard NFTs on-chain every 24 hours until a max supply of 2000 is reached.</p>
             <p>
-              90% of all auction proceeds are stored in the WizardsDAO treasury, where they are governed by all members.
+              100% of all auction proceeds are stored in the WizardsDAO treasury, where they are governed by all
+              members.
             </p>
             <Link href="https://etherscan.io/address/0xfd4617981Dfdf01A8A098Bf2906d4B55Af801d20">
               <a className="section-btn btn" target="_blank">
@@ -63,7 +64,6 @@ const AuctionPage = ({ web3React, onWalletConnectClick, onWalletDisconnect }) =>
                   <img src="/static/img/creators.png" style={{ transform: "scale(.9)" }} />
                   <div className="content">
                     <h2>Creator Rewards</h2>
-                    <p>10% of all auction proceeds are sent to the creators to cover starting costs and expenses.</p>
                     <p>
                       After 5 Wizards are auctioned, 1 Wizard is distributed to the creators' wallet for a total of 54
                       Wizards. These don't intefere with the normal cadence of auctions.
